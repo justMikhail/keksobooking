@@ -74,7 +74,7 @@ const renderPinTemplate = (pins) => {
   for (let i = 0; i < pins.length; i++) {
     const newPin = pinTemplate.cloneNode(true);
     const pinImg = newPin.querySelector(`img`);
-    newPin.Style = `left: ${pins[i].location.x - pinImg.width / 2}px; top: ${pins[i].location.y - pinImg.height}px;`;
+    newPin.style = `left: ${pins[i].location.x - pinImg.width / 2}px; top: ${pins[i].location.y - pinImg.height}px;`;
     pinImg.src = pins[i].author.avatar;
     pinImg.alt = pins[i].offer.title;
 
