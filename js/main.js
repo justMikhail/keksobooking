@@ -3,11 +3,11 @@
 // Константы===========================================================================
 const SUITE_QUANTITY = 8;
 
-const types = [`palace`, `flat`, `house`, `bungalow`];
-const checkins = [`12:00`, `13:00`, `14:00`];
-const checkouts = [`12:00`, `13:00`, `14:00`];
-const features = [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`];
-const suitePhotos = [
+const TYPES = [`palace`, `flat`, `house`, `bungalow`];
+const CHECKIN = [`12:00`, `13:00`, `14:00`];
+const CHECKOUT = [`12:00`, `13:00`, `14:00`];
+const FEATURES = [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`];
+const SUITE_PHOTOS = [
   `http://o0.github.io/assets/images/tokyo/hotel1.jpg`,
   `http://o0.github.io/assets/images/tokyo/hotel2.jpg`,
   `http://o0.github.io/assets/images/tokyo/hotel3.jpg`
@@ -17,7 +17,6 @@ const map = document.querySelector(`.map`);
 const mapWidth = map.clientWidth;
 
 map.classList.remove(`map--faded`);
-
 
 // ===================================================================================
 const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min) + min);
@@ -46,14 +45,14 @@ const getArrSuite = (count) => {
         title: `Заголовок обьявления`,
         adress: `${locationX}, ${locationY}`,
         price: getRandomNumber(500, 10000),
-        type: getRandomArrayElement(types),
+        type: getRandomArrayElement(TYPES),
         rooms: getRandomNumber(1, 4),
         guests: getRandomNumber(1, 10),
-        checkin: getRandomArrayElement(checkins),
-        checkouts: getRandomArrayElement(checkouts),
-        features: getRandomArray(features),
+        checkin: getRandomArrayElement(CHECKIN),
+        checkout: getRandomArrayElement(CHECKOUT),
+        features: getRandomArray(FEATURES),
         description: `Описание предложения`,
-        photos: getRandomArray(suitePhotos),
+        photos: getRandomArray(SUITE_PHOTOS),
       },
       location: {
         x: locationX,
@@ -83,7 +82,9 @@ const renderPinTemplate = (pins) => {
   }
   return pinFragment;
 };
-
 renderPinTemplate(mockArrSuite);
+
+const mapSection = document.querySelector(`.map__pins`);
+mapSection.appendChild(pinFragment);
 
 // ========================================================================================
