@@ -82,9 +82,10 @@ const renderPinTemplate = (pins) => {
   }
   return pinFragment;
 };
-renderPinTemplate(mockArrSuite);
 
+const getMockPins = renderPinTemplate(mockArrSuite);
 const mapSection = document.querySelector(`.map__pins`);
-mapSection.appendChild(pinFragment);
+
+mapSection.appendChild(getMockPins);
 
 // ========================================================================================
