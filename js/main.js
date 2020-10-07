@@ -138,7 +138,7 @@ const renderCardTemplate = (cardData) => {
   return cardFragment;
 };
 
-const getMockCard = renderCardTemplate(mockArrSuite[4]);
+const getMockCard = renderCardTemplate(mockArrSuite[getRandomNumber(0, 8)]);
 console.log(getMockCard);
 
 map.insertBefore(getMockCard, mapFilterContainer);
