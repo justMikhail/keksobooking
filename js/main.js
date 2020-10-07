@@ -133,8 +133,7 @@ const renderCardTemplate = (cardData) => {
 
   newCard.querySelector(`.popup__avatar`).src = cardData.author.avatar;
 
-  // console.log(cardData);
-  // console.log(newCard);
+  cardFragment.appendChild(newCard);
 
   return cardFragment;
 };
