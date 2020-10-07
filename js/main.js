@@ -1,6 +1,6 @@
 'use strict';
 
-// Константы===========================================================================
+// Константы-------------------------------------------------------------------------
 const SUITE_QUANTITY = 8;
 
 const TYPES = [`palace`, `flat`, `house`, `bungalow`];
@@ -13,12 +13,15 @@ const SUITE_PHOTOS = [
   `http://o0.github.io/assets/images/tokyo/hotel3.jpg`
 ];
 
+// ----------------------------------------------------------------------------------
 const map = document.querySelector(`.map`);
 const mapWidth = map.clientWidth;
 
+const mapFilterContainer = map.querySelector(`.map__filters-container`);
+
 map.classList.remove(`map--faded`);
 
-// ===================================================================================
+// -----------------------------------------------------------------------------------
 const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min) + min);
 
 const getRandomArrayElement = (array) => array[Math.floor(Math.random() * array.length)];
@@ -27,9 +30,9 @@ const getRandomArray = (array) => {
   const end = getRandomNumber(0, array.length);
   return array.slice(0, end);
 };
-// ===================================================================================
+// -----------------------------------------------------------------------------------
 
-// Функция, создает массив из сгенерированных обьектов================================
+// Функция, создает массив из сгенерированных обьектов--------------------------------
 const getArrSuite = (count) => {
   const arraySuiteData = [];
 
@@ -65,7 +68,7 @@ const getArrSuite = (count) => {
 
 const mockArrSuite = getArrSuite(SUITE_QUANTITY);
 
-// Функия, генерирует метки, заполненные данными из масива mockArraySuite=================
+// Функия, генерирует метки, заполненные данными из масива mockArraySuite------------------
 const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
 
 const renderPinTemplate = (pins) => {
@@ -88,4 +91,51 @@ const mapSection = document.querySelector(`.map__pins`);
 
 mapSection.appendChild(getMockPins);
 
-// ========================================================================================
+// Функция, генерирует карточу с информацией об объявлении----------------------------------
+
+const cardPopupTemplate = document.querySelector(`#card`).content.querySelector(`.popup`);
+
+const renderCardTemplate = (cardData) => {
+  const cardFragment = document.createDocumentFragment();
+
+  const newCard = cardPopupTemplate.cloneNode(true);
+
+  const popupFeatures = newCard.querySelector(`.popup__features`);// Массив с "фичами" обьявления
+  const popupPhotos = newCard.querySelector(`.popup__photos`);// Массив с фото обьявления
+  const cardImg = popupPhotos.querySelector(`img`);
+
+  newCard.querySelector(`.popup__title`).textContent = cardData.offer.title;
+  newCard.querySelector(`.popup__text--address`).textContent = cardData.offer.address;
+  newCard.querySelector(`.popup__text--price`).textContent = `${cardData.offer.price} ₽/ночь`;
+  newCard.querySelector(`.popup__type`).textContent = cardData.offer.type;
+  newCard.querySelector(`.popup__text--capacity`).textContent = `${cardData.offer.rooms} комнаты для ${cardData.offer.guests} гостей`;
+  newCard.querySelector(`.popup__text--time`).textContent = `Заезд после ${cardData.offer.checkin} выезд до ${cardData.offer.checkout}`;
+
+  popupFeatures.innerHTML = ``;
+  for (let i = 0; i < cardData.offer.features.length; i++) {
+    const features = cardData.offer.features;
+    const newLi = document.createElement(`li`);
+    newLi.classList.add(`popup__feature`, `popup__feature--${features[i]}`);
+    popupFeatures.appendChild(newLi);
+  }
+
+  popupPhotos.innerHTML = ``;
+  for (let i = 0; i < cardData.offer.photos.length; i++) {
+    const photosArr = cardData.offer.photos;
+
+    const newPhoto = cardImg.cloneNode(true);
+    newPhoto.src = photosArr[i];
+    popupPhotos.appendChild(newPhoto);
+  }
+
+  newCard.querySelector(`.popup__avatar`).src = cardData.author.avatar;
+
+  console.log(cardData);
+  console.log(newCard);
+
+  return cardFragment;
+};
+
+const getMockCard = renderCardTemplate(mockArrSuite[4]);
+mapFilterContainer.appendChild(getMockCard);
+
