@@ -128,26 +128,19 @@ const renderCardTemplate = (cardData) => {
     newImg.setAttribute(`width`, 45);
     newImg.setAttribute(`height`, 40);
     newImg.setAttribute(`alt`, `Фотография жилья`);
+    popupPhotos.appendChild(newImg);
   }
-
-  // popupPhotos.innerHTML = ``;
-  // for (let i = 0; i < cardData.offer.photos.length; i++) {
-  //   const photosArr = cardData.offer.photos;
-  //   const cardImg = popupPhotos.querySelector(`img`);
-  //
-  //   const newPhoto = cardImg.cloneNode(true);
-  //   newPhoto.src = photosArr[i];
-  //   popupPhotos.appendChild(newPhoto);
-  // }
 
   newCard.querySelector(`.popup__avatar`).src = cardData.author.avatar;
 
-  console.log(cardData);
-  console.log(newCard);
+  // console.log(cardData);
+  // console.log(newCard);
 
   return cardFragment;
 };
 
 const getMockCard = renderCardTemplate(mockArrSuite[4]);
-mapFilterContainer.appendChild(getMockCard);
+console.log(getMockCard);
+
+map.insertBefore(getMockCard, mapFilterContainer);
 
