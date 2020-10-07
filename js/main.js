@@ -102,7 +102,7 @@ const renderCardTemplate = (cardData) => {
 
   const popupFeatures = newCard.querySelector(`.popup__features`);// Массив с "фичами" обьявления
   const popupPhotos = newCard.querySelector(`.popup__photos`);// Массив с фото обьявления
-  const cardImg = popupPhotos.querySelector(`img`);
+
 
   newCard.querySelector(`.popup__title`).textContent = cardData.offer.title;
   newCard.querySelector(`.popup__text--address`).textContent = cardData.offer.address;
@@ -122,11 +122,23 @@ const renderCardTemplate = (cardData) => {
   popupPhotos.innerHTML = ``;
   for (let i = 0; i < cardData.offer.photos.length; i++) {
     const photosArr = cardData.offer.photos;
-
-    const newPhoto = cardImg.cloneNode(true);
-    newPhoto.src = photosArr[i];
-    popupPhotos.appendChild(newPhoto);
+    const newImg = document.createElement(`img`);
+    newImg.classList.add(`popup__photo`);
+    newImg.src = photosArr[i];
+    newImg.setAttribute(`width`, 45);
+    newImg.setAttribute(`height`, 40);
+    newImg.setAttribute(`alt`, `Фотография жилья`);
   }
+
+  // popupPhotos.innerHTML = ``;
+  // for (let i = 0; i < cardData.offer.photos.length; i++) {
+  //   const photosArr = cardData.offer.photos;
+  //   const cardImg = popupPhotos.querySelector(`img`);
+  //
+  //   const newPhoto = cardImg.cloneNode(true);
+  //   newPhoto.src = photosArr[i];
+  //   popupPhotos.appendChild(newPhoto);
+  // }
 
   newCard.querySelector(`.popup__avatar`).src = cardData.author.avatar;
 
