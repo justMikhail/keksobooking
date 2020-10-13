@@ -1,9 +1,16 @@
 'use strict';
 
 // Константы-------------------------------------------------------------------------
+
 const SUITE_QUANTITY = 8;
 
 const TYPES = [`palace`, `flat`, `house`, `bungalow`];
+const TYPES_RUS = {
+  flat: `Квартира`,
+  bungalow: `Бунгало`,
+  house: `Дом`,
+  palace: `Дворец`
+};
 const CHECKIN = [`12:00`, `13:00`, `14:00`];
 const CHECKOUT = [`12:00`, `13:00`, `14:00`];
 const FEATURES = [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`];
@@ -23,6 +30,7 @@ const MAX_ROOMS = 4;
 const MAX_GUESTS = 10;
 
 // ----------------------------------------------------------------------------------
+
 const map = document.querySelector(`.map`);
 const mapWidth = map.clientWidth;
 
@@ -31,6 +39,7 @@ const mapFilterContainer = map.querySelector(`.map__filters-container`);
 map.classList.remove(`map--faded`);
 
 // -----------------------------------------------------------------------------------
+
 const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min) + min);
 
 const getRandomArrayElement = (array) => array[Math.floor(Math.random() * array.length)];
@@ -39,9 +48,11 @@ const getRandomArray = (array) => {
   const end = getRandomNumber(0, array.length);
   return array.slice(0, end);
 };
+
 // -----------------------------------------------------------------------------------
 
 // Функция, создает массив из сгенерированных обьектов--------------------------------
+
 const getArrSuite = (count) => {
   const arraySuiteData = [];
 
@@ -78,6 +89,7 @@ const getArrSuite = (count) => {
 const mockArrSuite = getArrSuite(SUITE_QUANTITY);
 
 // Генерируются метки, заполненные данными из переданного масива------------------------
+
 const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
 
 const renderPins = (pins) => {
@@ -112,11 +124,10 @@ const renderCard = (cardData) => {
   const popupFeatures = newCard.querySelector(`.popup__features`);// DOM-элемент с "фичами" обьявления
   const popupPhotos = newCard.querySelector(`.popup__photos`);// DOM-элемент с фото обьявления
 
-
   newCard.querySelector(`.popup__title`).textContent = cardData.offer.title;
   newCard.querySelector(`.popup__text--address`).textContent = cardData.offer.address;
   newCard.querySelector(`.popup__text--price`).textContent = `${cardData.offer.price} ₽/ночь`;
-  newCard.querySelector(`.popup__type`).textContent = cardData.offer.type;
+  newCard.querySelector(`.popup__type`).textContent = TYPES_RUS[cardData.offer.type];
   newCard.querySelector(`.popup__text--capacity`).textContent = `${cardData.offer.rooms} комнаты для ${cardData.offer.guests} гостей`;
   newCard.querySelector(`.popup__text--time`).textContent = `Заезд после ${cardData.offer.checkin} выезд до ${cardData.offer.checkout}`;
 
@@ -150,4 +161,6 @@ const renderCard = (cardData) => {
 const getMockCard = renderCard(mockArrSuite[getRandomNumber(0, SUITE_QUANTITY)]);
 
 map.insertBefore(getMockCard, mapFilterContainer);
+
+// ----------------------------------------------------------------------------------------------------
 
