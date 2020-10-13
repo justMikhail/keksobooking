@@ -13,6 +13,15 @@ const SUITE_PHOTOS = [
   `http://o0.github.io/assets/images/tokyo/hotel3.jpg`
 ];
 
+const MIN_Y = 130;
+const MAX_Y = 630;
+
+const MIN_PRICE = 500;
+const MAX_PRICE = 10000;
+
+const MAX_ROOMS = 4;
+const MAX_GUESTS = 10;
+
 // ----------------------------------------------------------------------------------
 const map = document.querySelector(`.map`);
 const mapWidth = map.clientWidth;
@@ -38,7 +47,7 @@ const getArrSuite = (count) => {
 
   for (let i = 0; i < count; i++) {
     const locationX = getRandomNumber(1, mapWidth);
-    const locationY = getRandomNumber(130, 630);
+    const locationY = getRandomNumber(MIN_Y, MAX_Y);
 
     arraySuiteData[i] = {
       author: {
@@ -47,10 +56,10 @@ const getArrSuite = (count) => {
       offer: {
         title: `Заголовок обьявления`,
         adress: `${locationX}, ${locationY}`,
-        price: getRandomNumber(500, 10000),
+        price: getRandomNumber(MIN_PRICE, MAX_PRICE),
         type: getRandomArrayElement(TYPES),
-        rooms: getRandomNumber(1, 4),
-        guests: getRandomNumber(1, 10),
+        rooms: getRandomNumber(1, MAX_ROOMS),
+        guests: getRandomNumber(1, MAX_GUESTS),
         checkin: getRandomArrayElement(CHECKIN),
         checkout: getRandomArrayElement(CHECKOUT),
         features: getRandomArray(FEATURES),
@@ -68,10 +77,10 @@ const getArrSuite = (count) => {
 
 const mockArrSuite = getArrSuite(SUITE_QUANTITY);
 
-// Функия, генерирует метки, заполненные данными из масива mockArraySuite------------------
+// Генерируются метки, заполненные данными из переданного масива------------------------
 const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
 
-const renderPinTemplate = (pins) => {
+const renderPins = (pins) => {
   const pinFragment = document.createDocumentFragment();
 
   for (let i = 0; i < pins.length; i++) {
@@ -86,22 +95,22 @@ const renderPinTemplate = (pins) => {
   return pinFragment;
 };
 
-const getMockPins = renderPinTemplate(mockArrSuite);
+const getMockPins = renderPins(mockArrSuite);
 const mapSection = document.querySelector(`.map__pins`);
 
 mapSection.appendChild(getMockPins);
 
-// Функция, генерирует карточу с информацией об объявлении----------------------------------
+// Генерируется карточка с информацией об объявлении----------------------------------
 
 const cardPopupTemplate = document.querySelector(`#card`).content.querySelector(`.popup`);
 
-const renderCardTemplate = (cardData) => {
+const renderCard = (cardData) => {
   const cardFragment = document.createDocumentFragment();
 
   const newCard = cardPopupTemplate.cloneNode(true);
 
-  const popupFeatures = newCard.querySelector(`.popup__features`);// Массив с "фичами" обьявления
-  const popupPhotos = newCard.querySelector(`.popup__photos`);// Массив с фото обьявления
+  const popupFeatures = newCard.querySelector(`.popup__features`);// DOM-элемент с "фичами" обьявления
+  const popupPhotos = newCard.querySelector(`.popup__photos`);// DOM-элемент с фото обьявления
 
 
   newCard.querySelector(`.popup__title`).textContent = cardData.offer.title;
@@ -113,18 +122,18 @@ const renderCardTemplate = (cardData) => {
 
   popupFeatures.innerHTML = ``;
   for (let i = 0; i < cardData.offer.features.length; i++) {
-    const features = cardData.offer.features;
+    const feature = cardData.offer.features[i];
     const newLi = document.createElement(`li`);
-    newLi.classList.add(`popup__feature`, `popup__feature--${features[i]}`);
+    newLi.classList.add(`popup__feature`, `popup__feature--${feature}`);
     popupFeatures.appendChild(newLi);
   }
 
   popupPhotos.innerHTML = ``;
   for (let i = 0; i < cardData.offer.photos.length; i++) {
-    const photosArr = cardData.offer.photos;
+    const photoFromArr = cardData.offer.photos[i];
     const newImg = document.createElement(`img`);
     newImg.classList.add(`popup__photo`);
-    newImg.src = photosArr[i];
+    newImg.src = photoFromArr;
     newImg.setAttribute(`width`, 45);
     newImg.setAttribute(`height`, 40);
     newImg.setAttribute(`alt`, `Фотография жилья`);
@@ -138,8 +147,7 @@ const renderCardTemplate = (cardData) => {
   return cardFragment;
 };
 
-const getMockCard = renderCardTemplate(mockArrSuite[getRandomNumber(0, 8)]);
-console.log(getMockCard);
+const getMockCard = renderCard(mockArrSuite[getRandomNumber(0, SUITE_QUANTITY)]);
 
 map.insertBefore(getMockCard, mapFilterContainer);
 
