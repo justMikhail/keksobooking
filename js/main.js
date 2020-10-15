@@ -257,12 +257,15 @@ const onFormChange = () => {
   if ((inputRoomNumber.value === `1`) && (inputGuestsCapacity.value !== `1`)) {
     inputRoomNumber.setCustomValidity(`1 комната рассчитана для 1 гостя`);
   } else if ((inputRoomNumber.value === `2`) && (inputGuestsCapacity.value === `3`) || (inputGuestsCapacity.value === `0`)) {
-    inputRoomNumber.setCustomValidity(`данная комната рассчитана для 2 и менее гостей`);
+    inputRoomNumber.setCustomValidity(`рассчитано для 2 и менее гостей`);
   } else if ((inputRoomNumber.value === `3`) && (inputGuestsCapacity.value === `0`)) {
-    inputRoomNumber.setCustomValidity(`данная комната рассчитана для 3 и менее гостей`);
+    inputRoomNumber.setCustomValidity(`расчитано для 3 и менее гостей`);
   } else if ((inputRoomNumber.value === `100`) && (inputGuestsCapacity.value !== `0`)) {
-    inputRoomNumber.setCustomValidity(`данная комната не рассчитана для гостей`);
+    inputRoomNumber.setCustomValidity(`не рассчитано для гостей`);
+  } else {
+    inputRoomNumber.setCustomValidity(``);
   }
+  inputRoomNumber.reportValidity();
 };
 
 inputRoomNumber.addEventListener(`change`, onFormChange);
