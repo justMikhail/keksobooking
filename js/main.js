@@ -11,6 +11,7 @@ const TYPES_RUS = {
   house: `Дом`,
   palace: `Дворец`
 };
+const ROOMS_QUANTITY = [1, 2, 3, 100];
 const CHECKIN = [`12:00`, `13:00`, `14:00`];
 const CHECKOUT = [`12:00`, `13:00`, `14:00`];
 const FEATURES = [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`];
@@ -70,7 +71,7 @@ const getArrSuite = (count) => {
         adress: `${locationX}, ${locationY}`,
         price: getRandomNumber(MIN_PRICE, MAX_PRICE),
         type: getRandomArrayElement(TYPES),
-        rooms: getRandomNumber(1, MAX_ROOMS),
+        rooms: getRandomArrayElement(ROOMS_QUANTITY),
         guests: getRandomNumber(1, MAX_GUESTS),
         checkin: getRandomArrayElement(CHECKIN),
         checkout: getRandomArrayElement(CHECKOUT),
