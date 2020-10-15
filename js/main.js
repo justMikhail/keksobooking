@@ -36,8 +36,6 @@ const MAX_PRICE = 10000;
 const map = document.querySelector(`.map`);
 const mapWidth = map.clientWidth;
 
-const mapFilterContainer = map.querySelector(`.map__filters-container`);
-
 // -----------------------------------------------------------------------------------
 
 const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min) + min);
@@ -48,6 +46,12 @@ const getRandomArray = (array) => {
   const end = getRandomNumber(0, array.length);
   return array.slice(0, end);
 };
+
+const mapPin = document.querySelector(`.map__pin--main`); // Метка на карте
+
+const mapFilter = document.querySelector(`.map__filters-container`); // Фильтр обьявлений на карте
+const adForm = document.querySelector(`.ad-form`); // Форма. ГЛАВНАЯ
+const inputAdress = adForm.querySelector(`#address`); // Форма. Адресс
 
 // -----------------------------------------------------------------------------------
 
@@ -113,7 +117,7 @@ const mapSection = document.querySelector(`.map__pins`);
 // mapSection.appendChild(getMockPins);
 
 // Генерируется карточка с информацией об объявлении----------------------------------
-
+/*
 const cardPopupTemplate = document.querySelector(`#card`).content.querySelector(`.popup`);
 
 const renderCard = (cardData) => {
@@ -158,17 +162,11 @@ const renderCard = (cardData) => {
   return cardFragment;
 };
 
-// const getMockCard = renderCard(mockArrSuite[getRandomNumber(0, SUITE_QUANTITY)]);
+const getMockCard = renderCard(mockArrSuite[getRandomNumber(0, SUITE_QUANTITY)]);
 
-// map.insertBefore(getMockCard, mapFilterContainer);
-
+map.insertBefore(getMockCard, mapFilter);
+*/
 // Активация карты. Валидация формы------------------------------------------------------------------------------------------
-
-const mapPin = document.querySelector(`.map__pin--main`); // Метка на карте
-
-const mapFilter = document.querySelector(`.map__filters-container`); // Фильтр обьявлений на карте
-const adForm = document.querySelector(`.ad-form`); // Форма. ГЛАВНАЯ
-const inputAdress = adForm.querySelector(`#address`); // Форма. Адресс
 
 // БЛОКИРОВКА формы
 
