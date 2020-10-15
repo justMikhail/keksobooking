@@ -12,6 +12,7 @@ const TYPES_RUS = {
   palace: `Дворец`
 };
 const ROOMS_QUANTITY = [1, 2, 3, 100];
+const GUESTS_QUANTITY = [3, 2, 1, 0];
 const CHECKIN = [`12:00`, `13:00`, `14:00`];
 const CHECKOUT = [`12:00`, `13:00`, `14:00`];
 const FEATURES = [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`];
@@ -29,9 +30,6 @@ const MAP_PIN_HEIGHT = 84;
 
 const MIN_PRICE = 500;
 const MAX_PRICE = 10000;
-
-const MAX_ROOMS = 4;
-const MAX_GUESTS = 10;
 
 // ----------------------------------------------------------------------------------
 
@@ -72,7 +70,7 @@ const getArrSuite = (count) => {
         price: getRandomNumber(MIN_PRICE, MAX_PRICE),
         type: getRandomArrayElement(TYPES),
         rooms: getRandomArrayElement(ROOMS_QUANTITY),
-        guests: getRandomNumber(1, MAX_GUESTS),
+        guests: getRandomArrayElement(GUESTS_QUANTITY),
         checkin: getRandomArrayElement(CHECKIN),
         checkout: getRandomArrayElement(CHECKOUT),
         features: getRandomArray(FEATURES),
@@ -250,6 +248,24 @@ const onPinEnter = (evt) => {
 mapPin.addEventListener(`mousedown`, onPinMousedown);
 mapPin.addEventListener(`keydown`, onPinEnter);
 
-// ВАЛИДАЦИЯ формы
+// ВАЛИДАЦИЯ формы-------------------------------------------------------------------------------------------------------------------
 
-comst inputRoomsQuantity = adForm.querySelector(`#room_number`)
+const inputRoomNumber = adForm.querySelector(`#room_number`); // Выбор колличества комнат
+const inputGuestsCapacity = adForm.querySelector(`#capacity`); // Выбор колличества гостей
+
+const onFormChange = () => {
+  if ((inputRoomNumber.value === `1`) && (inputGuestsCapacity.value !== `1`)) {
+    inputRoomNumber.setCustomValidity(`1 комната рассчитана для 1 гостя`);
+  } else if ((inputRoomNumber.value === `2`) && (inputGuestsCapacity.value === `3`) || (inputGuestsCapacity.value === `0`)) {
+    inputRoomNumber.setCustomValidity(`данная комната рассчитана для 2 и менее гостей`);
+  } else if ((inputRoomNumber.value === `3`) && (inputGuestsCapacity.value === `0`)) {
+    inputRoomNumber.setCustomValidity(`данная комната рассчитана для 3 и менее гостей`);
+  } else if ((inputRoomNumber.value === `100`) && (inputGuestsCapacity.value !== `0`)) {
+    inputRoomNumber.setCustomValidity(`данная комната не рассчитана для гостей`);
+  }
+};
+
+inputRoomNumber.addEventListener(`change`, onFormChange);
+inputGuestsCapacity.addEventListener(`change`, onFormChange);
+// -----------------------------------------------------------------------------------------------------------------------------------
+
