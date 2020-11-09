@@ -10,7 +10,7 @@
   const cardPopupTemplate = document.querySelector(`#card`).content.querySelector(`.popup`);
 
   // Генерируется карточка с информацией об объявлении----------------------------------
-  /*
+
   const renderCard = (cardData) => {
     const cardFragment = document.createDocumentFragment();
 
@@ -58,5 +58,5 @@
 
   window.card = {
     render: renderCard,
-  };  */
+  };
 })();

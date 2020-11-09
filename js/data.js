@@ -1,6 +1,11 @@
 'use strict';
 
 (function () {
+  // Импорт---------------------------------------------------------------------------------
+
+  const getRandomNumber = window.util.getRandomNumber;
+  const getRandomArrayElement = window.util.getRandomArrayElement;
+  const getRandomArray = window.util.getRandomArray;
 
   // Константы-------------------------------------------------------------------------
 
@@ -31,6 +36,8 @@
     `http://o0.github.io/assets/images/tokyo/hotel3.jpg`
   ];
 
+  const MIN_X = 0;
+  const MAX_X = 1200;
   const MIN_Y = 130;
   const MAX_Y = 630;
 
@@ -40,19 +47,13 @@
   const MIN_PRICE = 500;
   const MAX_PRICE = 10000;
 
-  // Импорт---------------------------------------------------------------------------------
-
-  const getRandomNumber = window.util.getRandomNumber;
-  const getRandomArrayElement = window.util.getRandomArrayElement;
-  const getRandomArray = window.util.getRandomArray;
-
   // Создание массива с данными, сгенерированными рандомно----------------------------------
 
-  const getArrSuite = (count, mapWidth) => {
+  const getArrSuite = (count) => {
     const arraySuiteData = [];
 
     for (let i = 0; i < count; i++) {
-      const locationX = getRandomNumber(1, mapWidth);
+      const locationX = getRandomNumber(MIN_X, MAX_X);
       const locationY = getRandomNumber(MIN_Y, MAX_Y);
 
       arraySuiteData[i] = {
@@ -82,14 +83,13 @@
     return arraySuiteData;
   };
 
-  const mockArrSuite = getArrSuite(SUITE_QUANTITY);
 
   window.data = {
     TYPES,
-    mockArrSuite,
     SUITE_QUANTITY,
     MAP_PIN_WIDTH,
     MAP_PIN_HEIGHT,
+    getArrSuite,
   };
 
 })();

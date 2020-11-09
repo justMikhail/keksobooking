@@ -52,9 +52,9 @@
   // ЭКСПОРТ--------------------------------------------------------------------------------
 
   window.form = {
-    adForm,
+    ad: adForm,
+    block: blockForm,
+    unblock: unblockForm,
     inputAddress,
-    blockForm,
-    unblockForm,
   };
 })();
