@@ -77,7 +77,7 @@
           x: locationX,
           y: locationY
         },
-        id: i + 1,
+        id: `${i + 1}`,
       };
     }
     return arraySuiteData;

@@ -26,12 +26,12 @@
   const mapFilter = document.querySelector(`.map__filters-container`); // Фильтр обьявлений на карте
 
   const mapPins = document.querySelector(`.map__pins`); // Метки обьявлений
-  const mapPin = document.querySelector(`.map__pin--main`); // Метка обьявлений
+  const mainPin = document.querySelector(`.map__pin--main`); // Метка обьявлений
 
 
   const getMapAdress = (deactive) => {
-    const mapPinX = parseInt(mapPin.style.left, 10); // Нач. коорд. X
-    const mapPinY = parseInt(mapPin.style.top, 10); // Нач. коорд. Y
+    const mapPinX = parseInt(mainPin.style.left, 10); // Нач. коорд. X
+    const mapPinY = parseInt(mainPin.style.top, 10); // Нач. коорд. Y
     const addressX = mapPinX + Math.round(MAP_PIN_WIDTH / 2);
     const addressY = mapPinY + (deactive ? Math.round(MAP_PIN_WIDTH / 2) : MAP_PIN_HEIGHT);
     inputAddress.value = `${addressX}, ${addressY}`;
@@ -52,8 +52,7 @@
     adForm.classList.remove(`ad-form--disabled`);
 
     mapPins.appendChild(renderPins(window.data.mockArrSuite));
-    const getRenderedCard = renderCard(window.data.mockArrSuite[getRandomNumber(0, SUITE_QUANTITY)]);
-    map.insertBefore(getRenderedCard, mapFilter);
+
 
     unblockForm(adForm);
     unblockForm(mapFilter);
@@ -65,9 +64,13 @@
 
   map.addEventListener(`click`, function (evt) {
     const pin = evt.target.closest(`.map__pin:not(.map__pin--main)`);
-    console.log(evt.target);
     if (pin) {
       const pinId = pin.dataset.id;
+      const currentOffer = window.data.mockArrSuite.find((item) => item.id === pinId);
+      console.log(currentOffer);
+
+      const getRenderedCard = renderCard(currentOffer);
+      map.insertBefore(getRenderedCard, mapFilter);
     }
   });
 
@@ -77,7 +80,7 @@
     body: map,
     filter: mapFilter,
     pins: mapPins,
-    pin: mapPins,
+    mainPin,
     getAdress: getMapAdress,
     deActive: deActiveMap,
     active: activeMap,

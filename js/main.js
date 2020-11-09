@@ -6,13 +6,13 @@
   const getArrSuite = window.data.getArrSuite;
   const activeMap = window.map.active;
   const deActiveMap = window.map.deActive;
-  const mapPin = window.map.pin;
+  const mainPin = window.map.mainPin;
 
   // Список констант и переменных----------------------------------------------------
 
   // Генерация массива из обьектов с данными обьявлений
 
-  window.data.mockArrSuite = getArrSuite(SUITE_QUANTITY);
+  window.data.mockArrSuite = getArrSuite(SUITE_QUANTITY); // !offers
 
   // ДЕАКТИВАЦИЯ    карты по умочанию
 
@@ -32,8 +32,8 @@
     }
   };
 
-  mapPin.addEventListener(`mousedown`, onPinMousedown);
-  mapPin.addEventListener(`keydown`, onPinEnter);
+  mainPin.addEventListener(`mousedown`, onPinMousedown);
+  mainPin.addEventListener(`keydown`, onPinEnter);
 
 })();
 
