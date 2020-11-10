@@ -3,7 +3,7 @@
 (function () {
   // ИМПОРТ--------------------------------------------------------------------------
   const SUITE_QUANTITY = window.data.SUITE_QUANTITY;
-  const getArrSuite = window.data.getArrSuite;
+  const getOffers = window.data.getOffers;
   const activeMap = window.map.active;
   const deActiveMap = window.map.deActive;
   const mainPin = window.map.mainPin;
@@ -12,7 +12,7 @@
 
   // Генерация массива из обьектов с данными обьявлений
 
-  window.data.mockArrSuite = getArrSuite(SUITE_QUANTITY); // !offers
+  window.data.mockOffers = getOffers(SUITE_QUANTITY); // !offers
 
   // ДЕАКТИВАЦИЯ    карты по умочанию
 

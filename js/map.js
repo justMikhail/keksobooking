@@ -2,11 +2,8 @@
 (function () {
 
   // ИМПОРТ--------------------------------------------------------------------------
-  const SUITE_QUANTITY = window.data.SUITE_QUANTITY;
   const MAP_PIN_WIDTH = window.data.MAP_PIN_WIDTH;
   const MAP_PIN_HEIGHT = window.data.MAP_PIN_HEIGHT;
-
-  const mockArrSuite = window.data.mockArrSuite;
 
   const renderCard = window.card.render;
 
@@ -17,8 +14,6 @@
   const inputAddress = window.form.inputAddress;
 
   const unblockForm = window.form.unblock;
-
-  const getRandomNumber = window.util.getRandomNumber;
 
   // Список констант и переменных----------------------------------------------------
 
@@ -51,7 +46,7 @@
     map.classList.remove(`map--faded`);
     adForm.classList.remove(`ad-form--disabled`);
 
-    mapPins.appendChild(renderPins(window.data.mockArrSuite));
+    mapPins.appendChild(renderPins(window.data.mockOffers));
 
 
     unblockForm(adForm);
@@ -66,8 +61,7 @@
     const pin = evt.target.closest(`.map__pin:not(.map__pin--main)`);
     if (pin) {
       const pinId = pin.dataset.id;
-      const currentOffer = window.data.mockArrSuite.find((item) => item.id === pinId);
-      console.log(currentOffer);
+      const currentOffer = window.data.mockOffers.find((item) => item.id === pinId);
 
       const getRenderedCard = renderCard(currentOffer);
       map.insertBefore(getRenderedCard, mapFilter);
