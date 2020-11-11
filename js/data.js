@@ -89,6 +89,10 @@
     SUITE_QUANTITY,
     MAP_PIN_WIDTH,
     MAP_PIN_HEIGHT,
+    MIN_X,
+    MAX_X,
+    MIN_Y,
+    MAX_Y,
     getOffers,
   };
 
