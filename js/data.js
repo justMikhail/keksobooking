@@ -49,7 +49,7 @@
 
   // Создание массива с данными, сгенерированными рандомно----------------------------------
 
-  const getArrSuite = (count) => {
+  const getOffers = (count) => {
     const arraySuiteData = [];
 
     for (let i = 0; i < count; i++) {
@@ -89,7 +89,11 @@
     SUITE_QUANTITY,
     MAP_PIN_WIDTH,
     MAP_PIN_HEIGHT,
-    getArrSuite,
+    MIN_X,
+    MAX_X,
+    MIN_Y,
+    MAX_Y,
+    getOffers,
   };
 
 })();

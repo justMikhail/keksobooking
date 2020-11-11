@@ -13,11 +13,13 @@
 
   const renderCard = (cardData) => {
     const cardFragment = document.createDocumentFragment();
-
     const newCard = cardPopupTemplate.cloneNode(true);
 
     const popupFeatures = newCard.querySelector(`.popup__features`);// DOM-элемент с "фичами" обьявления
     const popupPhotos = newCard.querySelector(`.popup__photos`);// DOM-элемент с фото обьявления
+
+    const photoesWidth = 45;
+    const photoesHeight = 40;
 
     newCard.querySelector(`.popup__title`).textContent = cardData.offer.title;
     newCard.querySelector(`.popup__text--address`).textContent = cardData.offer.address;
@@ -40,8 +42,8 @@
       const newImg = document.createElement(`img`);
       newImg.classList.add(`popup__photo`);
       newImg.src = photoFromArr;
-      newImg.setAttribute(`width`, 45);
-      newImg.setAttribute(`height`, 40);
+      newImg.setAttribute(`width`, photoesWidth);
+      newImg.setAttribute(`height`, photoesHeight);
       newImg.setAttribute(`alt`, `Фотография жилья`);
       popupPhotos.appendChild(newImg);
     }
