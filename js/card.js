@@ -9,6 +9,9 @@
 
   const cardPopupTemplate = document.querySelector(`#card`).content.querySelector(`.popup`);
 
+  const CARD_PHOTO_WIDTH = 45;
+  const CARD_PHOTO_HEIGHT = 40;
+
   // Генерируется карточка с информацией об объявлении----------------------------------
 
   const renderCard = (cardData) => {
@@ -17,9 +20,6 @@
 
     const popupFeatures = newCard.querySelector(`.popup__features`);// DOM-элемент с "фичами" обьявления
     const popupPhotos = newCard.querySelector(`.popup__photos`);// DOM-элемент с фото обьявления
-
-    const photoesWidth = 45;
-    const photoesHeight = 40;
 
     newCard.querySelector(`.popup__title`).textContent = cardData.offer.title;
     newCard.querySelector(`.popup__text--address`).textContent = cardData.offer.address;
@@ -42,8 +42,8 @@
       const newImg = document.createElement(`img`);
       newImg.classList.add(`popup__photo`);
       newImg.src = photoFromArr;
-      newImg.setAttribute(`width`, photoesWidth);
-      newImg.setAttribute(`height`, photoesHeight);
+      newImg.setAttribute(`width`, CARD_PHOTO_WIDTH);
+      newImg.setAttribute(`height`, CARD_PHOTO_HEIGHT);
       newImg.setAttribute(`alt`, `Фотография жилья`);
       popupPhotos.appendChild(newImg);
     }

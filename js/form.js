@@ -8,6 +8,8 @@
 
   const adForm = document.querySelector(`.ad-form`); // Форма. ГЛАВНАЯ
   const inputAddress = adForm.querySelector(`#address`); // Форма. Адресс
+  const inputRoomsNumber = adForm.querySelector(`#room_number`); // Форма выбора колличества комнат
+  const inputGuestsNumber = adForm.querySelector(`#capacity`); // Форма выбора колличества гостей
 
   // БЛОКИРОВКА формы
 
@@ -28,9 +30,6 @@
   };
 
   // ВАЛИДАЦИЯ формы
-
-  const inputRoomsNumber = adForm.querySelector(`#room_number`); // Форма выбора колличества комнат
-  const inputGuestsNumber = adForm.querySelector(`#capacity`); // Форма выбора колличества гостей
 
   const onFormChange = () => {
     const isRoomValid = inputRoomsNumber.value >= inputGuestsNumber.value;
