@@ -59,7 +59,7 @@
       inputAddress.value = `${(parseInt(mainPin.style.left, 10)) + Math.round(MAP_PIN_WIDTH / 2)}, ${(parseInt(mainPin.style.top, 10)) + MAP_PIN_HEIGHT}`;
     };
 
-    const onMouseUp = function (upEvt) {
+    const onMouseUp = (upEvt) => {
       upEvt.preventDefault();
 
       document.removeEventListener(`mousemove`, onMouseMove);

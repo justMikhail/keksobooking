@@ -4,8 +4,8 @@
   // ИМПОРТ--------------------------------------------------------------------------
   const SUITE_QUANTITY = window.data.SUITE_QUANTITY;
   const getOffers = window.data.getOffers;
-  const activeMap = window.map.active;
-  const deActiveMap = window.map.deActive;
+  const activateMap = window.map.activate;
+  const deActivateMap = window.map.deActivate;
   const mainPin = window.map.mainPin;
   const onActiveMainPinMouseDown = window.move.onActiveMainPinMouseDown;
 
@@ -18,24 +18,26 @@
 
   // ДЕАКТИВАЦИЯ    карты по умочанию
 
-  deActiveMap();
+  deActivateMap();
 
   // АКТИВАЦИЯ карты по клику мыши / нажатию на Enter
 
-  const onMainPinMousedown = (evt) => {
+  const onMainPinClick = (evt) => {
     if (evt.button === 0) {
-      activeMap();
+      activateMap();
+      mainPin.removeEventListener(`click`, onMainPinClick);
     }
   };
 
-  const onMainPinEnter = (evt) => {
+  const onMainPinKeyDown = (evt) => {
     if (evt.key === `Enter`) {
-      activeMap();
+      activateMap();
+      mainPin.removeEventListener(`click`, onMainPinClick);
     }
   };
 
-  mainPin.addEventListener(`mousedown`, onMainPinMousedown);
-  mainPin.addEventListener(`keydown`, onMainPinEnter);
+  mainPin.addEventListener(`click`, onMainPinClick);
+  mainPin.addEventListener(`keydown`, onMainPinKeyDown);
   mainPin.addEventListener(`mousedown`, onActiveMainPinMouseDown);
 
 })();
