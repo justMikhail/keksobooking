@@ -17,6 +17,7 @@
 
   const unblockForm = window.form.unblock;
 
+
   // Список констант и переменных----------------------------------------------------
 
   const map = document.querySelector(`.map`);
@@ -33,6 +34,7 @@
     inputAddress.value = `${addressX}, ${addressY}`;
   };
 
+
   // ДЕАКТИВАЦИЯ карты и меток обьявлений (ПО УМОЛЧАНИЮ)
 
   const deActivateMap = () => {
@@ -47,7 +49,7 @@
     map.classList.remove(`map--faded`);
     adForm.classList.remove(`ad-form--disabled`);
 
-    mapPins.appendChild(renderPins(window.data.mockOffers));
+    mapPins.appendChild(renderPins(window.data.offers));
 
     unblockForm(adForm);
     unblockForm(mapFilter);
@@ -60,7 +62,7 @@
 
     if (pin) {
       const pinId = pin.dataset.id;
-      const currentOffer = window.data.mockOffers.find((item) => item.id === pinId);
+      const currentOffer = window.data.offers.find((item) => item.id === pinId);
       const currentOfferCard = document.querySelector(`.map__card`);
       const activatedPin = document.querySelector(`.map__pin--active`);
       // Проверяем наличие открытой карточки обьявления, удаляем ее.
