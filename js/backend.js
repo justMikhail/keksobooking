@@ -2,8 +2,8 @@
 
 (function () {
 
-  const GET_URL = `https://21.javascript.pages.academy/keksobooking/data`;
-  const POST_URL = `https://21.javascript.pages.academy/keksobooking`;
+  const GET_URL = `https://21.javascript.pages.academy/keksobooking/data`; // GET - метод для отправки данных на сервер
+  const POST_URL = `https://21.javascript.pages.academy/keksobooking`; // POST - метод для передачи данных на сервер
 
   const StatusCode = {
     OK: 200,
