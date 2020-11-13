@@ -66,8 +66,24 @@
     makeRequest(onSuccess, onError, data);
   };
 
+  const serverStatusMessage = (statuseMessage) => {
+    const node = document.createElement(`div`);
+    node.style = `z-index: 100; margin: 0 auto; text-align: center; background-color: #FF2400;`;
+    node.style.position = `absolute`;
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = `24px`;
+    node.style.color = `white`;
+    node.style.textTransform = `uppercase`;
+    node.style.padding = `7px`;
+
+    node.textContent = statuseMessage;
+    document.body.insertAdjacentElement(`afterbegin`, node);
+  };
+
   window.backend = {
     load,
     upLoad,
+    serverStatusMessage,
   };
 })();
