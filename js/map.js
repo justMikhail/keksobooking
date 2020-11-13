@@ -62,8 +62,14 @@
       const pinId = pin.dataset.id;
       const currentOffer = window.data.mockOffers.find((item) => item.id === pinId);
       const currentOfferCard = document.querySelector(`.map__card`);
+      const activatedPin = document.querySelector(`.map__pin--active`);
+      // Проверяем наличие открытой карточки обьявления, удаляем ее.
       if (currentOfferCard) {
         currentOfferCard.remove();
+      }
+      // Проверяем наличие активного Pin, делаем его неактивным
+      if (activatedPin) {
+        activatedPin.classList.remove(`map__pin--active`);
       }
 
       const getRenderedCard = renderCard(currentOffer);
@@ -71,9 +77,11 @@
 
       const offerCard = document.querySelector(`.map__card`);
       const closeBtn = offerCard.querySelector(`.popup__close`);
+      pin.classList.add(`map__pin--active`);
 
       const closeOfferCard = () => {
         offerCard.remove();
+        pin.classList.remove(`map__pin--active`);
       };
 
       const onCloseBtnClick = () => {
