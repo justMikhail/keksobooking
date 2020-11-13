@@ -5,7 +5,7 @@
   const GET_URL = `https://21.javascript.pages.academy/keksobooking/data`; // GET - метод для отправки данных на сервер
   const POST_URL = `https://21.javascript.pages.academy/keksobooking`; // POST - метод для передачи данных на сервер
 
-  let TIMEOUT_IN_MS = 10000;
+  const TIMEOUT_IN_MS = 10000;
 
   const StatusCode = {
     OK: 200,

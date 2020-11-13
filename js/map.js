@@ -1,14 +1,13 @@
 'use strict';
 (function () {
 
-  // ИМПОРТ--------------------------------------------------------------------------
-  const isEscPressed = window.util.isEscPressed;
-
+  // --------------------------------------------------------------------------------
   const MAP_PIN_WIDTH = window.data.MAP_PIN_WIDTH;
   const MAP_PIN_HEIGHT = window.data.MAP_PIN_HEIGHT;
 
-  const renderCard = window.card.render;
+  const isEscPressed = window.util.isEscPressed;
 
+  const renderCard = window.card.render;
   const renderPins = window.pin.render;
 
   const adForm = window.form.ad;
@@ -18,13 +17,13 @@
   const unblockForm = window.form.unblock;
 
 
-  // Список констант и переменных----------------------------------------------------
+  // ---------------------------------------------------------------------------------
 
   const map = document.querySelector(`.map`);
   const mapFilter = document.querySelector(`.map__filters-container`); // Фильтр обьявлений на карте
 
-  const mapPins = document.querySelector(`.map__pins`); // Метки обьявлений
-  const mainPin = document.querySelector(`.map__pin--main`); // Метка обьявлений
+  const mapPins = map.querySelector(`.map__pins`); // Метки обьявлений (блок)
+  const mainPin = map.querySelector(`.map__pin--main`); // Метка обьявлений
 
   const getMapAdress = (deactive) => {
     const mapPinX = parseInt(mainPin.style.left, 10); // Нач. коорд. X
@@ -105,6 +104,14 @@
 
   map.addEventListener(`click`, onMapClick);
 
+  // УДАЛЕНИЕ меток(пинов) с карты
+  const deleteAllPins = () => {
+    const pins = map.querySelectorAll(`map__pin:not(.map__pin--main)`);
+    for (let i = 0; i < pins.length; i++) {
+      pins[i].remove();
+    }
+  };
+
 
   // ЭКСПОРТ--------------------------------------------------------------------------------
 
@@ -116,6 +123,7 @@
     getAdress: getMapAdress,
     deActivate: deActivateMap,
     activate: activateMap,
+    deleteAllPins,
   };
 
 })();

@@ -2,9 +2,13 @@
 
 (function () {
   // ИМПОРТ--------------------------------------------------------------------------
+  const main = document.querySelector(`main`);
+  const isEscPressed = window.util.isEscPressed;
+  const upLoad = window.backend.upLoad;
+  const deleteAllPins = window.map.deleteAllPins;
+  const deActivateMap = window.map.deActivate;
 
-
-  // Список констант и переменных----------------------------------------------------
+  // --------------------------------------------------------------------------------
 
   const adForm = document.querySelector(`.ad-form`); // Форма. ГЛАВНАЯ
   const inputAddress = adForm.querySelector(`#address`); // Форма. Адресс
@@ -47,6 +51,65 @@
 
   inputRoomsNumber.addEventListener(`change`, onFormChange);
   inputGuestsNumber.addEventListener(`change`, onFormChange);
+
+  // -------------------------------------------------------------------------------------------
+  const returnToNoActivePage = () => {
+    deActivateMap();
+    deleteAllPins();
+    adForm.reset();
+  };
+
+  const onFormSuccessUpload = () => {
+    returnToNoActivePage();
+    showFormUploadStatus(successMessage, main);
+  };
+
+  const onFormErrorUpload = () => {
+    showFormUploadStatus(errorMessage, main);
+  };
+
+  const onAdFormSubmit = (evt) => {
+    evt.preventDefault();
+
+    upLoad(onFormSuccessUpload, onFormErrorUpload, new FormData(adForm));
+  };
+
+  adForm.addEventListener(`submit`, onAdFormSubmit);
+
+
+  // СООБЩЕНИЕ о статусе отправки формы
+  const successMessage = document.querySelector(`#success`).content.querySelector(`.success`);
+  const errorMessage = document.querySelector(`#error`).content.querySelector(`.error`);
+
+  const showFormUploadStatus = (messageTemplate, parentContainer) => {
+    const messageWindow = messageTemplate.cloneNode(true);
+    const errorButton = messageWindow.querySelector(`.error__button`);
+
+    parentContainer.append(messageWindow);
+
+    if (errorButton) {
+      errorButton.addEventListener(`click`, () => {
+        messageWindow.remove();
+      });
+    }
+
+    const onWindowClick = (evt) => {
+      if (evt.target.parentNode !== messageWindow) {
+        messageWindow.remove();
+      }
+    };
+
+    const onWindowKeydown = (evt) => {
+      if (isEscPressed(evt)) {
+        messageWindow.remove();
+      }
+    };
+
+    window.addEventListener(`keydown`, onWindowKeydown);
+    window.addEventListener(`click`, onWindowClick);
+  };
+
+  // -------------------------------------------------------------------------------------------
 
   // ЭКСПОРТ--------------------------------------------------------------------------------
 
