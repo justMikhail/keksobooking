@@ -24,6 +24,13 @@
   const mapPins = map.querySelector(`.map__pins`); // Метки обьявлений (блок)
   const mainPin = map.querySelector(`.map__pin--main`); // Метка обьявлений
 
+  const BASIC_MAINPIN_POSITION = {
+    x: mainPin.offsetLeft,
+    y: mainPin.offsetTop
+  };
+
+  // ---------------------------------------------------------------------------------
+
   const getMapAdress = (deactive) => {
     const mapPinX = parseInt(mainPin.style.left, 10); // Нач. коорд. X
     const mapPinY = parseInt(mainPin.style.top, 10); // Нач. коорд. Y
@@ -41,6 +48,9 @@
     getMapAdress(true);
     map.classList.add(`map--faded`);
     adForm.classList.add(`ad-form--disabled`);
+
+    mainPin.style.left = BASIC_MAINPIN_POSITION.x + `px`;
+    mainPin.style.top = BASIC_MAINPIN_POSITION.y + `px`;
   };
 
   // АКТИВАЦИЯ карты и меток обьявлений

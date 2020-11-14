@@ -76,15 +76,15 @@
       offerPrice.setAttribute(`min`, `0`);
       offerPrice.setAttribute(`placeholder`, `0`);
     } else if ((offerType.value === `flat`) && (offerPrice.value < 1000)) {
-      offerPrice.setCustomValidity(`Для квартиры минимальная цена за ночь 1000р`);
+      offerPrice.setCustomValidity(`Минимальная цена за ночь 1000р для данного типа жидья`);
       offerPrice.setAttribute(`min`, `1000`);
       offerPrice.setAttribute(`placeholder`, `1000`);
     } else if ((offerType.value === `house`) && (offerPrice.value < 5000)) {
-      offerPrice.setCustomValidity(`Для дома минимальная цена за ночь 5000р`);
+      offerPrice.setCustomValidity(`Минимальная цена за ночь 5000р для данного типа жидья`);
       offerPrice.setAttribute(`min`, `5000`);
       offerPrice.setAttribute(`placeholder`, `5000`);
     } else if ((offerType.value === `palace`) && (offerPrice.value < 10000)) {
-      offerPrice.setCustomValidity(`Для дворца минимальная цена за ночь 10000р`);
+      offerPrice.setCustomValidity(`Минимальная цена за ночь 10000р для данного типа жидья`);
       offerPrice.setAttribute(`min`, `10000`);
       offerPrice.setAttribute(`placeholder`, `10000`);
     } else {
