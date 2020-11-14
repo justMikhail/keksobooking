@@ -4,6 +4,7 @@
   // ---------------------------------------------------------------------------------
   const MIN_TITLE_LENGTH = 30;
   const MAX_TITLE_LENGTH = 100;
+  const MAX_OFFER_PRICE = 1000000;
 
   const isEscPressed = window.util.isEscPressed;
 
@@ -63,11 +64,62 @@
 
   offerTitle.addEventListener(`input`, onOfferTitleInput);
 
-  // Валидация адреса
+  // Валидация ввода адеса (только для чтения)
   offerAddress.setAttribute(`readonly`, `readonly`);
 
-  // ВАЛИДАЦИЯ заголовка обьявления
+  // ВАЛИДАЦИЯ. Поле «Тип жилья» влияет на минимальное значение поля «Цена за ночь»
+  const onOfferPriceOrTypeChange = function () {
+    if ((offerType.value === `bungalow`) && (offerPrice.value < 0)) {
+      offerPrice.setCustomValidity(`Для бунгало минимальная цена за ночь 0р`);
+      offerPrice.setAttribute(`min`, `0`);
+      offerPrice.setAttribute(`placeholder`, `0`);
+    } else if ((offerType.value === `flat`) && (offerPrice.value < 1000)) {
+      offerPrice.setCustomValidity(`Для квартиры минимальная цена за ночь 1000р`);
+      offerPrice.setAttribute(`min`, `1000`);
+      offerPrice.setAttribute(`placeholder`, `1000`);
+    } else if ((offerType.value === `house`) && (offerPrice.value < 5000)) {
+      offerPrice.setCustomValidity(`Для дома минимальная цена за ночь 5000р`);
+      offerPrice.setAttribute(`min`, `5000`);
+      offerPrice.setAttribute(`placeholder`, `5000`);
+    } else if ((offerType.value === `palace`) && (offerPrice.value < 10000)) {
+      offerPrice.setCustomValidity(`Для дворца минимальная цена за ночь 10000р`);
+      offerPrice.setAttribute(`min`, `10000`);
+      offerPrice.setAttribute(`placeholder`, `10000`);
+    } else {
+      offerPrice.setCustomValidity(``);
+    }
+    offerPrice.reportValidity();
+  };
+  offerPrice.addEventListener(`change`, onOfferPriceOrTypeChange);
+  offerType.addEventListener(`change`, onOfferPriceOrTypeChange);
 
+  // Валидация максимальной цены
+  offerPrice.setAttribute(`max`, MAX_OFFER_PRICE);
+  offerPrice.setAttribute(`required`, `required`);
+
+  const onOfferPriceInput = function () {
+
+    if (offerPrice.value > MAX_OFFER_PRICE) {
+      offerPrice.setCustomValidity(`Цена не должна превышать ` + MAX_OFFER_PRICE);
+    } else {
+      offerPrice.setCustomValidity(``);
+    }
+    offerPrice.reportValidity();
+  };
+  offerPrice.addEventListener(`input`, onOfferPriceInput);
+
+  // Поля «Время заезда» и «Время выезда» синхронизированы
+  const onOfferTimeinChange = () => {
+    offerTimeout.value = offerTimein.value;
+  };
+  const onofferTimeoutChange = () => {
+    offerTimein.value = offerTimeout.value;
+  };
+
+  offerTimein.addEventListener(`change`, onOfferTimeinChange);
+  offerTimeout.addEventListener(`change`, onofferTimeoutChange);
+
+  // ВАЛИДАЦИЯ соотношения кооличества комнат к колличеству мест
   const onFormChange = () => {
     const isRoomValid = inputRoomsNumber.value >= inputGuestsNumber.value;
     const isNoQuestsRoomInvalid = inputRoomsNumber.value === `100` && inputGuestsNumber !== `0`;
