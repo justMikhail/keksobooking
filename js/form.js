@@ -1,19 +1,25 @@
 'use strict';
 
 (function () {
-  // ИМПОРТ--------------------------------------------------------------------------
-  const main = document.querySelector(`main`);
+  // ---------------------------------------------------------------------------------
+  const MIN_TITLE_LENGTH = 30;
+  const MAX_TITLE_LENGTH = 100;
+
   const isEscPressed = window.util.isEscPressed;
-  const upLoad = window.backend.upLoad;
-  const deleteAllPins = window.map.deleteAllPins;
-  const deActivateMap = window.map.deActivate;
 
   // --------------------------------------------------------------------------------
 
-  const adForm = document.querySelector(`.ad-form`); // Форма. ГЛАВНАЯ
-  const inputAddress = adForm.querySelector(`#address`); // Форма. Адресс
+  const adForm = document.querySelector(`.ad-form`); // Форма.
+  const offeravatar = adForm.querySelector(`#avatar`); // Форма. Аватар владельца
+  const offerTitle = adForm.querySelector(`#title`); // Форма. Заголовок
+  const offerAddress = adForm.querySelector(`#address`); // Форма. Адресс
+  const offerType = adForm.querySelector(`#type`); // Форма. Тип жилья
+  const offerPrice = adForm.querySelector(`#price`); // Формаю. Цена за ночь
+  const offerTimein = adForm.querySelector(`#timein`);
+  const offerTimeout = adForm.querySelector(`#timeout`);
   const inputRoomsNumber = adForm.querySelector(`#room_number`); // Форма выбора колличества комнат
   const inputGuestsNumber = adForm.querySelector(`#capacity`); // Форма выбора колличества гостей
+  const offerimages = adForm.querySelector(`#images`); // Форма. input type="file"
 
   // БЛОКИРОВКА формы
 
@@ -33,7 +39,34 @@
     });
   };
 
-  // ВАЛИДАЦИЯ формы
+  // ВАЛИДАЦИЯ формы (START)---------------------------------------------------------------------------------
+
+  // ВАЛИДАЦИЯ фото
+  offeravatar.setAttribute(`accept`, `image/jpeg,image/png,image/gif`);
+  offerimages.setAttribute(`accept`, `image/jpeg,image/png,image/gif`);
+
+  // ВАЛИДАЦИЯ заголовка обьявления
+
+  offerTitle.setAttribute(`required`, `required`);
+  const onOfferTitleInput = () => {
+    let valueTitleLength = offerTitle.value.length;
+
+    if (valueTitleLength < MIN_TITLE_LENGTH) {
+      offerTitle.setCustomValidity(`Добавьте ` + (MIN_TITLE_LENGTH - valueTitleLength) + ` симв.`);
+    } else if (valueTitleLength > MAX_TITLE_LENGTH) {
+      offerTitle.setCustomValidity(`Лимит привышен на ` + (valueTitleLength - MAX_TITLE_LENGTH) + ` симв.`);
+    } else {
+      offerTitle.setCustomValidity(``);
+    }
+    offerTitle.reportValidity();
+  };
+
+  offerTitle.addEventListener(`input`, onOfferTitleInput);
+
+  // Валидация адреса
+  offerAddress.setAttribute(`readonly`, `readonly`);
+
+  // ВАЛИДАЦИЯ заголовка обьявления
 
   const onFormChange = () => {
     const isRoomValid = inputRoomsNumber.value >= inputGuestsNumber.value;
@@ -52,40 +85,19 @@
   inputRoomsNumber.addEventListener(`change`, onFormChange);
   inputGuestsNumber.addEventListener(`change`, onFormChange);
 
-  // -------------------------------------------------------------------------------------------
-  const returnToNoActivePage = () => {
-    deActivateMap();
-    deleteAllPins();
-    adForm.reset();
-  };
-
-  const onFormSuccessUpload = () => {
-    returnToNoActivePage();
-    showFormUploadStatus(successMessage, main);
-  };
-
-  const onFormErrorUpload = () => {
-    showFormUploadStatus(errorMessage, main);
-  };
-
-  const onAdFormSubmit = (evt) => {
-    evt.preventDefault();
-
-    upLoad(onFormSuccessUpload, onFormErrorUpload, new FormData(adForm));
-  };
-
-  adForm.addEventListener(`submit`, onAdFormSubmit);
+  // ВАЛИДАЦИЯ формы (END)---------------------------------------------------------------------------------
 
 
   // СООБЩЕНИЕ о статусе отправки формы
   const successMessage = document.querySelector(`#success`).content.querySelector(`.success`);
   const errorMessage = document.querySelector(`#error`).content.querySelector(`.error`);
 
-  const showFormUploadStatus = (messageTemplate, parentContainer) => {
+  const showFormUploadStatus = (messageTemplate) => {
     const messageWindow = messageTemplate.cloneNode(true);
     const errorButton = messageWindow.querySelector(`.error__button`);
+    const main = document.querySelector(`main`);
 
-    parentContainer.append(messageWindow);
+    main.append(messageWindow);
 
     if (errorButton) {
       errorButton.addEventListener(`click`, () => {
@@ -117,6 +129,9 @@
     ad: adForm,
     block: blockForm,
     unblock: unblockForm,
-    inputAddress,
+    offerAddress,
+    showUploadStatus: showFormUploadStatus,
+    successMessage,
+    errorMessage,
   };
 })();

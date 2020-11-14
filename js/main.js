@@ -5,9 +5,15 @@
   const activateMap = window.map.activate;
   const deActivateMap = window.map.deActivate;
   const mainPin = window.map.mainPin;
+  const adForm = window.form.ad;
   const onActiveMainPinMouseDown = window.move.onActiveMainPinMouseDown;
   const load = window.backend.load;
+  const upLoad = window.backend.upLoad;
   const serverStatusMessage = window.backend.serverStatusMessage;
+  const showFormUploadStatus = window.form.showUploadStatus;
+  const formSuccessMessage = window.form.successMessage;
+  const formErrorMessage = window.form.errorMessage;
+  const deleteAllPins = window.map.deleteAllPins;
 
   // Список констант и переменных----------------------------------------------------
 
@@ -44,8 +50,31 @@
     }
   };
 
+  // -------------------------------------------------------------------------------------------
+  const returnToNoActivePage = () => {
+    adForm.reset();
+    deleteAllPins(); // ! Не работает код
+    deActivateMap(); // ! Не работает код
+  };
+
+  const onFormSuccessUpload = () => {
+    showFormUploadStatus(formSuccessMessage);
+    returnToNoActivePage();
+  };
+
+  const onFormErrorUpload = () => {
+    showFormUploadStatus(formErrorMessage);
+  };
+
+  const onAdFormSubmit = (evt) => {
+    evt.preventDefault();
+    upLoad(onFormSuccessUpload, onFormErrorUpload, new FormData(adForm));
+  };
+  // --------------------------------------------------------------------------------------------
+
   mainPin.addEventListener(`click`, onMainPinClick);
   mainPin.addEventListener(`keydown`, onMainPinKeyDown);
   mainPin.addEventListener(`mousedown`, onActiveMainPinMouseDown);
+  adForm.addEventListener(`submit`, onAdFormSubmit);
 
 })();

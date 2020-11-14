@@ -5,8 +5,7 @@
 
   const SUITE_QUANTITY = 8;
 
-  const TYPES = { // ? используем Object.keys() и Object.values() для создания масива из ключей или значений
-    palace: `Дворец`,
+  const TYPES = {
     flat: `Квартира`,
     house: `Дом`,
     bungalow: `Бунгало`,

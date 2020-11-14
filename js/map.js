@@ -12,10 +12,9 @@
 
   const adForm = window.form.ad;
   const blockForm = window.form.block;
-  const inputAddress = window.form.inputAddress;
+  const offerAddress = window.form.offerAddress;
 
   const unblockForm = window.form.unblock;
-
 
   // ---------------------------------------------------------------------------------
 
@@ -30,7 +29,7 @@
     const mapPinY = parseInt(mainPin.style.top, 10); // Нач. коорд. Y
     const addressX = mapPinX + Math.round(MAP_PIN_WIDTH / 2);
     const addressY = mapPinY + (deactive ? Math.round(MAP_PIN_WIDTH / 2) : MAP_PIN_HEIGHT);
-    inputAddress.value = `${addressX}, ${addressY}`;
+    offerAddress.value = `${addressX}, ${addressY}`;
   };
 
 
@@ -111,7 +110,6 @@
       pins[i].remove();
     }
   };
-
 
   // ЭКСПОРТ--------------------------------------------------------------------------------
 
