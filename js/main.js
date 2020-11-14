@@ -14,6 +14,7 @@
   const formSuccessMessage = window.form.successMessage;
   const formErrorMessage = window.form.errorMessage;
   const deleteAllPins = window.map.deleteAllPins;
+  const closeOpenedOfferCard = window.map.closeOpenedOfferCard;
 
   // Список констант и переменных----------------------------------------------------
 
@@ -53,8 +54,11 @@
   // -------------------------------------------------------------------------------------------
   const returnToNoActivePage = () => {
     adForm.reset();
-    deleteAllPins(); // ! Не работает код
-    deActivateMap(); // ! Не работает код
+    deActivateMap();
+    deleteAllPins();
+    closeOpenedOfferCard();
+    mainPin.addEventListener(`click`, onMainPinClick);
+    mainPin.addEventListener(`keydown`, onMainPinKeyDown);
   };
 
   const onFormSuccessUpload = () => {

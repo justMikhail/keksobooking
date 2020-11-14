@@ -25,7 +25,7 @@
   // БЛОКИРОВКА формы
 
   const blockForm = (form) => {
-    const arrFormElements = Array.from(form.children); // !создание массива из элементов формы
+    const arrFormElements = Array.from(form.children);
     arrFormElements.forEach((element) => {
       element.setAttribute(`disabled`, `disabled`);
     });
@@ -34,7 +34,7 @@
   // РАЗБЛОКИРОВКА формы
 
   const unblockForm = (form) => {
-    const arrFormElements = Array.from(form.children); // !создание массива из элементов формы
+    const arrFormElements = Array.from(form.children);
     arrFormElements.forEach((element) => {
       element.removeAttribute(`disabled`, `disabled`);
     });
@@ -49,6 +49,8 @@
   // ВАЛИДАЦИЯ заголовка обьявления
 
   offerTitle.setAttribute(`required`, `required`);
+  offerTitle.removeAttribute(`minlength`);
+  offerTitle.removeAttribute(`maxlength`);
   const onOfferTitleInput = () => {
     let valueTitleLength = offerTitle.value.length;
 
@@ -68,7 +70,7 @@
   offerAddress.setAttribute(`readonly`, `readonly`);
 
   // ВАЛИДАЦИЯ. Поле «Тип жилья» влияет на минимальное значение поля «Цена за ночь»
-  const onOfferPriceOrTypeChange = function () {
+  const onOfferPriceOrTypeChange = () => {
     if ((offerType.value === `bungalow`) && (offerPrice.value < 0)) {
       offerPrice.setCustomValidity(`Для бунгало минимальная цена за ночь 0р`);
       offerPrice.setAttribute(`min`, `0`);
@@ -97,7 +99,7 @@
   offerPrice.setAttribute(`max`, MAX_OFFER_PRICE);
   offerPrice.setAttribute(`required`, `required`);
 
-  const onOfferPriceInput = function () {
+  const onOfferPriceInput = () => {
 
     if (offerPrice.value > MAX_OFFER_PRICE) {
       offerPrice.setCustomValidity(`Цена не должна превышать ` + MAX_OFFER_PRICE);

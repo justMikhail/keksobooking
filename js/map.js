@@ -39,6 +39,8 @@
     blockForm(adForm);
     blockForm(mapFilter);
     getMapAdress(true);
+    map.classList.add(`map--faded`);
+    adForm.classList.add(`ad-form--disabled`);
   };
 
   // АКТИВАЦИЯ карты и меток обьявлений
@@ -81,17 +83,22 @@
 
       const closeOfferCard = () => {
         offerCard.remove();
+      };
+
+      const deActivatePin = () => {
         pin.classList.remove(`map__pin--active`);
       };
 
       const onCloseBtnClick = () => {
         closeOfferCard();
+        deActivatePin();
       };
 
       const onWindowKeydown = (keyDownEvt) => {
         if (isEscPressed(keyDownEvt)) {
           evt.preventDefault();
           closeOfferCard();
+          deActivatePin();
         }
       };
 
@@ -105,9 +112,17 @@
 
   // УДАЛЕНИЕ меток(пинов) с карты
   const deleteAllPins = () => {
-    const pins = map.querySelectorAll(`map__pin:not(.map__pin--main)`);
+    const pins = map.querySelectorAll(`.map__pin:not(.map__pin--main)`);
     for (let i = 0; i < pins.length; i++) {
       pins[i].remove();
+    }
+  };
+
+  // Закрытие карточки
+  const closeOpenedOfferCard = () => {
+    const openedOfferCard = document.querySelector(`.map__card`);
+    if (openedOfferCard) {
+      openedOfferCard.remove();
     }
   };
 
@@ -122,6 +137,7 @@
     deActivate: deActivateMap,
     activate: activateMap,
     deleteAllPins,
+    closeOpenedOfferCard,
   };
 
 })();
