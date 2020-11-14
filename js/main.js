@@ -5,8 +5,16 @@
   const activateMap = window.map.activate;
   const deActivateMap = window.map.deActivate;
   const mainPin = window.map.mainPin;
+  const adForm = window.form.ad;
   const onActiveMainPinMouseDown = window.move.onActiveMainPinMouseDown;
   const load = window.backend.load;
+  const upLoad = window.backend.upLoad;
+  const serverStatusMessage = window.backend.serverStatusMessage;
+  const showFormUploadStatus = window.form.showUploadStatus;
+  const formSuccessMessage = window.form.successMessage;
+  const formErrorMessage = window.form.errorMessage;
+  const deleteAllPins = window.map.deleteAllPins;
+  const closeOpenedOfferCard = window.map.closeOpenedOfferCard;
 
   // Список констант и переменных----------------------------------------------------
 
@@ -17,17 +25,7 @@
   // АКТИВАЦИЯ карты по клику мыши / нажатию на Enter
   // Functiuns
   const onError = (errorMessage) => {
-    const node = document.createElement(`div`);
-    node.style = `z-index: 100; margin: 0 auto; text-align: center; background-color: red;`;
-    node.style.position = `absolute`;
-    node.style.left = 0;
-    node.style.right = 0;
-    node.style.fontSize = `28px`;
-    node.style.color = `white`;
-    node.style.textTransform = `uppercase`;
-
-    node.textContent = errorMessage;
-    document.body.insertAdjacentElement(`afterbegin`, node);
+    serverStatusMessage(errorMessage);
   };
 
   const onSuccess = (data) => {
@@ -53,8 +51,34 @@
     }
   };
 
+  // -------------------------------------------------------------------------------------------
+  const returnToNoActivePage = () => {
+    adForm.reset();
+    deActivateMap();
+    deleteAllPins();
+    closeOpenedOfferCard();
+    mainPin.addEventListener(`click`, onMainPinClick);
+    mainPin.addEventListener(`keydown`, onMainPinKeyDown);
+  };
+
+  const onFormSuccessUpload = () => {
+    showFormUploadStatus(formSuccessMessage);
+    returnToNoActivePage();
+  };
+
+  const onFormErrorUpload = () => {
+    showFormUploadStatus(formErrorMessage);
+  };
+
+  const onAdFormSubmit = (evt) => {
+    evt.preventDefault();
+    upLoad(onFormSuccessUpload, onFormErrorUpload, new FormData(adForm));
+  };
+  // --------------------------------------------------------------------------------------------
+
   mainPin.addEventListener(`click`, onMainPinClick);
   mainPin.addEventListener(`keydown`, onMainPinKeyDown);
   mainPin.addEventListener(`mousedown`, onActiveMainPinMouseDown);
+  adForm.addEventListener(`submit`, onAdFormSubmit);
 
 })();

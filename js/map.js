@@ -1,37 +1,42 @@
 'use strict';
 (function () {
 
-  // ИМПОРТ--------------------------------------------------------------------------
-  const isEscPressed = window.util.isEscPressed;
-
+  // --------------------------------------------------------------------------------
   const MAP_PIN_WIDTH = window.data.MAP_PIN_WIDTH;
   const MAP_PIN_HEIGHT = window.data.MAP_PIN_HEIGHT;
 
-  const renderCard = window.card.render;
+  const isEscPressed = window.util.isEscPressed;
 
+  const renderCard = window.card.render;
   const renderPins = window.pin.render;
 
   const adForm = window.form.ad;
   const blockForm = window.form.block;
-  const inputAddress = window.form.inputAddress;
+  const offerAddress = window.form.offerAddress;
 
   const unblockForm = window.form.unblock;
 
-
-  // Список констант и переменных----------------------------------------------------
+  // ---------------------------------------------------------------------------------
 
   const map = document.querySelector(`.map`);
   const mapFilter = document.querySelector(`.map__filters-container`); // Фильтр обьявлений на карте
 
-  const mapPins = document.querySelector(`.map__pins`); // Метки обьявлений
-  const mainPin = document.querySelector(`.map__pin--main`); // Метка обьявлений
+  const mapPins = map.querySelector(`.map__pins`); // Метки обьявлений (блок)
+  const mainPin = map.querySelector(`.map__pin--main`); // Метка обьявлений
+
+  const BASIC_MAINPIN_POSITION = {
+    x: mainPin.offsetLeft,
+    y: mainPin.offsetTop
+  };
+
+  // ---------------------------------------------------------------------------------
 
   const getMapAdress = (deactive) => {
     const mapPinX = parseInt(mainPin.style.left, 10); // Нач. коорд. X
     const mapPinY = parseInt(mainPin.style.top, 10); // Нач. коорд. Y
     const addressX = mapPinX + Math.round(MAP_PIN_WIDTH / 2);
     const addressY = mapPinY + (deactive ? Math.round(MAP_PIN_WIDTH / 2) : MAP_PIN_HEIGHT);
-    inputAddress.value = `${addressX}, ${addressY}`;
+    offerAddress.value = `${addressX}, ${addressY}`;
   };
 
 
@@ -41,6 +46,11 @@
     blockForm(adForm);
     blockForm(mapFilter);
     getMapAdress(true);
+    map.classList.add(`map--faded`);
+    adForm.classList.add(`ad-form--disabled`);
+
+    mainPin.style.left = BASIC_MAINPIN_POSITION.x + `px`;
+    mainPin.style.top = BASIC_MAINPIN_POSITION.y + `px`;
   };
 
   // АКТИВАЦИЯ карты и меток обьявлений
@@ -83,17 +93,22 @@
 
       const closeOfferCard = () => {
         offerCard.remove();
+      };
+
+      const deActivatePin = () => {
         pin.classList.remove(`map__pin--active`);
       };
 
       const onCloseBtnClick = () => {
         closeOfferCard();
+        deActivatePin();
       };
 
       const onWindowKeydown = (keyDownEvt) => {
         if (isEscPressed(keyDownEvt)) {
           evt.preventDefault();
           closeOfferCard();
+          deActivatePin();
         }
       };
 
@@ -105,6 +120,21 @@
 
   map.addEventListener(`click`, onMapClick);
 
+  // УДАЛЕНИЕ меток(пинов) с карты
+  const deleteAllPins = () => {
+    const pins = map.querySelectorAll(`.map__pin:not(.map__pin--main)`);
+    for (let i = 0; i < pins.length; i++) {
+      pins[i].remove();
+    }
+  };
+
+  // Закрытие карточки
+  const closeOpenedOfferCard = () => {
+    const openedOfferCard = document.querySelector(`.map__card`);
+    if (openedOfferCard) {
+      openedOfferCard.remove();
+    }
+  };
 
   // ЭКСПОРТ--------------------------------------------------------------------------------
 
@@ -116,6 +146,8 @@
     getAdress: getMapAdress,
     deActivate: deActivateMap,
     activate: activateMap,
+    deleteAllPins,
+    closeOpenedOfferCard,
   };
 
 })();

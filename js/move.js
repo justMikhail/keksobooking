@@ -12,7 +12,7 @@
   const MAP_PIN_WIDTH = window.data.MAP_PIN_WIDTH;
   const MAP_PIN_HEIGHT = window.data.MAP_PIN_HEIGHT;
 
-  const inputAddress = window.form.inputAddress; // Поле "Адрксс" в форме обьявления
+  const offerAddress = window.form.offerAddress; // Поле "Адрксс" в форме обьявления
 
   // Список констант и переменных--------------------------------------------------
 
@@ -56,7 +56,7 @@
       }
 
 
-      inputAddress.value = `${(parseInt(mainPin.style.left, 10)) + Math.round(MAP_PIN_WIDTH / 2)}, ${(parseInt(mainPin.style.top, 10)) + MAP_PIN_HEIGHT}`;
+      offerAddress.value = `${(parseInt(mainPin.style.left, 10)) + Math.round(MAP_PIN_WIDTH / 2)}, ${(parseInt(mainPin.style.top, 10)) + MAP_PIN_HEIGHT}`;
     };
 
     const onMouseUp = (upEvt) => {

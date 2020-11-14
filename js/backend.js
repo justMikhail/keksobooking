@@ -5,7 +5,7 @@
   const GET_URL = `https://21.javascript.pages.academy/keksobooking/data`; // GET - метод для отправки данных на сервер
   const POST_URL = `https://21.javascript.pages.academy/keksobooking`; // POST - метод для передачи данных на сервер
 
-  let TIMEOUT_IN_MS = 10000;
+  const TIMEOUT_IN_MS = 10000;
 
   const StatusCode = {
     OK: 200,
@@ -66,8 +66,24 @@
     makeRequest(onSuccess, onError, data);
   };
 
+  const serverStatusMessage = (statuseMessage) => {
+    const node = document.createElement(`div`);
+    node.style = `z-index: 100; margin: 0 auto; text-align: center; background-color: #FF2400;`;
+    node.style.position = `absolute`;
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = `24px`;
+    node.style.color = `white`;
+    node.style.textTransform = `uppercase`;
+    node.style.padding = `7px`;
+
+    node.textContent = statuseMessage;
+    document.body.insertAdjacentElement(`afterbegin`, node);
+  };
+
   window.backend = {
     load,
     upLoad,
+    serverStatusMessage,
   };
 })();

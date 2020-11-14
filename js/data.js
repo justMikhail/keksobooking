@@ -1,18 +1,11 @@
 'use strict';
 
 (function () {
-  // Импорт---------------------------------------------------------------------------------
-
-  const getRandomNumber = window.util.getRandomNumber;
-  const getRandomArrayElement = window.util.getRandomArrayElement;
-  const getRandomArray = window.util.getRandomArray;
-
   // Константы-------------------------------------------------------------------------
 
   const SUITE_QUANTITY = 8;
 
-  const TYPES = { // ? используем Object.keys() и Object.values() для создания масива из ключей или значений
-    palace: `Дворец`,
+  const TYPES = {
     flat: `Квартира`,
     house: `Дом`,
     bungalow: `Бунгало`,
@@ -46,6 +39,11 @@
 
   const MIN_PRICE = 500;
   const MAX_PRICE = 10000;
+
+  // Импорт---------------------------------------------------------------------------------
+  const getRandomNumber = window.util.getRandomNumber;
+  const getRandomArrayElement = window.util.getRandomArrayElement;
+  const getRandomArray = window.util.getRandomArray;
 
   // Создание массива с данными, сгенерированными рандомно----------------------------------
 
