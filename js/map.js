@@ -1,7 +1,7 @@
 'use strict';
 (function () {
 
-  // --------------------------------------------------------------------------------
+  // ------------------------------------------------------------------------------------------------------------------------
 
   const MAP_PIN_WIDTH = window.data.MAP_PIN_WIDTH;
   const MAP_PIN_HEIGHT = window.data.MAP_PIN_HEIGHT;
@@ -20,14 +20,14 @@
   const mapFilter = document.querySelector(`.map__filters-container`); // Фильтр обьявлений на карте
 
   const mapPins = map.querySelector(`.map__pins`); // Метки обьявлений (блок)
-  const mainPin = map.querySelector(`.map__pin--main`); // Метка обьявлений
+  const mainPin = map.querySelector(`.map__pin--main`); // Главная метка
 
   const basicMainPinPisition = {
     x: mainPin.offsetLeft,
     y: mainPin.offsetTop
   };
 
-  // --------------------------------------------------------------------------------
+  // ------------------------------------------------------------------------------------------------------------------------
 
   const getMapAdress = (deactive) => {
     const mapPinX = parseInt(mainPin.style.left, 10); // Нач. коорд. X
@@ -37,7 +37,7 @@
     offerAddress.value = `${addressX}, ${addressY}`;
   };
 
-  // ДЕАКТИВАЦИЯ карты и меток обьявлений (ПО УМОЛЧАНИЮ)
+  // ДЕАКТИВАЦИЯ страницы
 
   const deActivateMap = () => {
     blockForm(adForm);
@@ -50,7 +50,7 @@
     mainPin.style.top = basicMainPinPisition.y + `px`;
   };
 
-  // АКТИВАЦИЯ карты и меток обьявлений
+  // АКТИВАЦИЯ страницы
 
   const activateMap = () => {
     map.classList.remove(`map--faded`);
@@ -73,10 +73,8 @@
       const pinId = pin.dataset.id;
       const currentOffer = window.data.offers.find((item) => item.id === pinId);
       const activatedPin = document.querySelector(`.map__pin--active`);
-      // Проверяем наличие открытой карточки обьявления, удаляем ее.
       closeOpenedOfferCard();
 
-      // Проверяем наличие активного Pin, делаем его неактивным
       if (activatedPin) {
         activatedPin.classList.remove(`map__pin--active`);
       }
@@ -113,7 +111,6 @@
 
   map.addEventListener(`click`, onMapClick);
 
-  // УДАЛЕНИЕ меток(пинов) с карты
   const deleteAllPins = () => {
     const pins = map.querySelectorAll(`.map__pin:not(.map__pin--main)`);
     for (let i = 0; i < pins.length; i++) {
@@ -121,7 +118,6 @@
     }
   };
 
-  // Закрытие карточки
   const closeOpenedOfferCard = () => {
     const openedOfferCard = document.querySelector(`.map__card`);
     if (openedOfferCard) {
@@ -135,7 +131,7 @@
     mapPins.appendChild(renderPins(filteredOffers));
   };
 
-  // ЭКСПОРТ--------------------------------------------------------------------------------
+  // ЭКСПОРТ------------------------------------------------------------------------------------------------------------------
 
   window.map = {
     body: map,

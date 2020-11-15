@@ -1,18 +1,15 @@
 'use strict';
 
 (function () {
-  // ИМПОРТ--------------------------------------------------------------------------
-
-  const TYPES = window.data.TYPES;
-
-  // Список констант и переменных----------------------------------------------------
-
-  const cardPopupTemplate = document.querySelector(`#card`).content.querySelector(`.popup`);
+  // ------------------------------------------------------------------------------------------------------------------------
 
   const CARD_PHOTO_WIDTH = 45;
   const CARD_PHOTO_HEIGHT = 40;
+  const TYPES = window.data.TYPES;
 
-  // Генерируется карточка с информацией об объявлении----------------------------------
+  const cardPopupTemplate = document.querySelector(`#card`).content.querySelector(`.popup`);
+
+  // ------------------------------------------------------------------------------------------------------------------------
 
   const renderCard = (cardData) => {
     const cardFragment = document.createDocumentFragment();

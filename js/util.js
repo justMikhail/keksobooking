@@ -1,7 +1,12 @@
 'use strict';
 (function () {
 
-  // Функции. Рандомайзеры ----------------------------------------------------------------
+  // ------------------------------------------------------------------------------------------------------------------------
+
+  let ENTER_KEYCODE = 13;
+  let ESC_KEYCODE = 27;
+
+  // ------------------------------------------------------------------------------------------------------------------------
 
   const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min) + min);
 
@@ -12,12 +17,6 @@
     return array.slice(0, end);
   };
 
-  let ENTER_KEYCODE = 13;
-  let ESC_KEYCODE = 27;
-
-  const isKeyBoardEvent = (evt) => {
-    return evt instanceof KeyboardEvent;
-  };
 
   const isEnterPressed = (evt) => {
     return evt.keyCode === ENTER_KEYCODE;
@@ -35,13 +34,13 @@
     }
     return true;
   };
-  // ---------------------------------------------------------------------------------------
+
+  // ЭКСПОРТ------------------------------------------------------------------------------------------------------------------
 
   window.util = {
     getRandomNumber,
     getRandomArrayElement,
     getRandomArray,
-    isKeyBoardEvent,
     isEnterPressed,
     isEscPressed,
     contains,
