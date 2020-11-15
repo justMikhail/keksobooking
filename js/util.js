@@ -27,7 +27,14 @@
     return evt.keyCode === ESC_KEYCODE;
   };
 
-
+  const contains = (where, what) => {
+    for (let i = 0; i < what.length; i++) {
+      if (where.indexOf(what[i]) === -1) {
+        return false;
+      }
+    }
+    return true;
+  };
   // ---------------------------------------------------------------------------------------
 
   window.util = {
@@ -37,5 +44,6 @@
     isKeyBoardEvent,
     isEnterPressed,
     isEscPressed,
+    contains,
   };
 })();

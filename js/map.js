@@ -2,6 +2,7 @@
 (function () {
 
   // --------------------------------------------------------------------------------
+
   const MAP_PIN_WIDTH = window.data.MAP_PIN_WIDTH;
   const MAP_PIN_HEIGHT = window.data.MAP_PIN_HEIGHT;
 
@@ -13,10 +14,7 @@
   const adForm = window.form.ad;
   const blockForm = window.form.block;
   const offerAddress = window.form.offerAddress;
-
   const unblockForm = window.form.unblock;
-
-  // ---------------------------------------------------------------------------------
 
   const map = document.querySelector(`.map`);
   const mapFilter = document.querySelector(`.map__filters-container`); // Фильтр обьявлений на карте
@@ -24,12 +22,12 @@
   const mapPins = map.querySelector(`.map__pins`); // Метки обьявлений (блок)
   const mainPin = map.querySelector(`.map__pin--main`); // Метка обьявлений
 
-  const BASIC_MAINPIN_POSITION = {
+  const basicMainPinPisition = {
     x: mainPin.offsetLeft,
     y: mainPin.offsetTop
   };
 
-  // ---------------------------------------------------------------------------------
+  // --------------------------------------------------------------------------------
 
   const getMapAdress = (deactive) => {
     const mapPinX = parseInt(mainPin.style.left, 10); // Нач. коорд. X
@@ -38,7 +36,6 @@
     const addressY = mapPinY + (deactive ? Math.round(MAP_PIN_WIDTH / 2) : MAP_PIN_HEIGHT);
     offerAddress.value = `${addressX}, ${addressY}`;
   };
-
 
   // ДЕАКТИВАЦИЯ карты и меток обьявлений (ПО УМОЛЧАНИЮ)
 
@@ -49,8 +46,8 @@
     map.classList.add(`map--faded`);
     adForm.classList.add(`ad-form--disabled`);
 
-    mainPin.style.left = BASIC_MAINPIN_POSITION.x + `px`;
-    mainPin.style.top = BASIC_MAINPIN_POSITION.y + `px`;
+    mainPin.style.left = basicMainPinPisition.x + `px`;
+    mainPin.style.top = basicMainPinPisition.y + `px`;
   };
 
   // АКТИВАЦИЯ карты и меток обьявлений
@@ -59,7 +56,9 @@
     map.classList.remove(`map--faded`);
     adForm.classList.remove(`ad-form--disabled`);
 
-    mapPins.appendChild(renderPins(window.data.offers));
+    const filteredOffers = window.filterOffers();
+
+    mapPins.appendChild(renderPins(filteredOffers));
 
     unblockForm(adForm);
     unblockForm(mapFilter);
@@ -73,12 +72,10 @@
     if (pin) {
       const pinId = pin.dataset.id;
       const currentOffer = window.data.offers.find((item) => item.id === pinId);
-      const currentOfferCard = document.querySelector(`.map__card`);
       const activatedPin = document.querySelector(`.map__pin--active`);
       // Проверяем наличие открытой карточки обьявления, удаляем ее.
-      if (currentOfferCard) {
-        currentOfferCard.remove();
-      }
+      closeOpenedOfferCard();
+
       // Проверяем наличие активного Pin, делаем его неактивным
       if (activatedPin) {
         activatedPin.classList.remove(`map__pin--active`);
@@ -91,23 +88,19 @@
       const closeBtn = offerCard.querySelector(`.popup__close`);
       pin.classList.add(`map__pin--active`);
 
-      const closeOfferCard = () => {
-        offerCard.remove();
-      };
-
       const deActivatePin = () => {
         pin.classList.remove(`map__pin--active`);
       };
 
       const onCloseBtnClick = () => {
-        closeOfferCard();
+        closeOpenedOfferCard();
         deActivatePin();
       };
 
       const onWindowKeydown = (keyDownEvt) => {
         if (isEscPressed(keyDownEvt)) {
           evt.preventDefault();
-          closeOfferCard();
+          closeOpenedOfferCard();
           deActivatePin();
         }
       };
@@ -136,6 +129,12 @@
     }
   };
 
+  const updatePins = (filteredOffers) => {
+    deleteAllPins();
+    closeOpenedOfferCard();
+    mapPins.appendChild(renderPins(filteredOffers));
+  };
+
   // ЭКСПОРТ--------------------------------------------------------------------------------
 
   window.map = {
@@ -148,6 +147,7 @@
     activate: activateMap,
     deleteAllPins,
     closeOpenedOfferCard,
+    updatePins,
   };
 
 })();
