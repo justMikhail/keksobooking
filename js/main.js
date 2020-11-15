@@ -1,7 +1,8 @@
 'use strict';
 
 (function () {
-  // ИМПОРТ--------------------------------------------------------------------------
+  // ------------------------------------------------------------------------------------------------------------------------
+
   const activateMap = window.map.activate;
   const deActivateMap = window.map.deActivate;
   const mainPin = window.map.mainPin;
@@ -16,14 +17,12 @@
   const deleteAllPins = window.map.deleteAllPins;
   const closeOpenedOfferCard = window.map.closeOpenedOfferCard;
 
-  // Список констант и переменных----------------------------------------------------
+  // ------------------------------------------------------------------------------------------------------------------------
 
-  // ДЕАКТИВАЦИЯ    карты по умочанию
 
+  // ДЕАКТИВАЦИЯ карты (по умочанию)
   deActivateMap();
 
-  // АКТИВАЦИЯ карты по клику мыши / нажатию на Enter
-  // Functiuns
   const onError = (errorMessage) => {
     serverStatusMessage(errorMessage);
   };
@@ -51,7 +50,8 @@
     }
   };
 
-  // -------------------------------------------------------------------------------------------
+  // ------------------------------------------------------------------------------------------------------------------------
+
   const returnToNoActivePage = () => {
     adForm.reset();
     deActivateMap();
@@ -74,7 +74,8 @@
     evt.preventDefault();
     upLoad(onFormSuccessUpload, onFormErrorUpload, new FormData(adForm));
   };
-  // --------------------------------------------------------------------------------------------
+
+  // ------------------------------------------------------------------------------------------------------------------------
 
   mainPin.addEventListener(`click`, onMainPinClick);
   mainPin.addEventListener(`keydown`, onMainPinKeyDown);

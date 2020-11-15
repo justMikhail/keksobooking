@@ -2,20 +2,19 @@
 
 (function () {
 
-  // ИМПОРТ--------------------------------------------------------------------------
+  // ------------------------------------------------------------------------------------------------------------------------
+
   const MIN_Y = window.data.MIN_Y; // Система координат. Карта.
   const MAX_Y = window.data.MAX_Y;
   const MIN_X = window.data.MIN_X;
   const MAX_X = window.data.MAX_X;
-
-  const mainPin = window.map.mainPin;
   const MAP_PIN_WIDTH = window.data.MAP_PIN_WIDTH;
   const MAP_PIN_HEIGHT = window.data.MAP_PIN_HEIGHT;
 
+  const mainPin = window.map.mainPin;
   const offerAddress = window.form.offerAddress; // Поле "Адрксс" в форме обьявления
 
-  // Список констант и переменных--------------------------------------------------
-
+  // ------------------------------------------------------------------------------------------------------------------------
 
   const onActiveMainPinMouseDown = (evt) => {
     evt.preventDefault();
@@ -70,7 +69,7 @@
     document.addEventListener(`mouseup`, onMouseUp);
   };
 
-  // ЭКСПОРТ--------------------------------------------------------------------------------
+  // ЭКСПОРТ------------------------------------------------------------------------------------------------------------------
 
   window.move = {
     onActiveMainPinMouseDown,
