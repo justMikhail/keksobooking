@@ -2,6 +2,8 @@
 
 (function () {
 
+  // ------------------------------------------------------------------------------------------------------------------------
+
   const GET_URL = `https://21.javascript.pages.academy/keksobooking/data`; // GET - метод для отправки данных на сервер
   const POST_URL = `https://21.javascript.pages.academy/keksobooking`; // POST - метод для передачи данных на сервер
 
@@ -13,6 +15,8 @@
     NOT_FOUND: 404,
     SERVER_ERROR: 500,
   };
+
+  // ------------------------------------------------------------------------------------------------------------------------
 
   const makeRequest = (onSuccess, onError, data) => {
     const xhr = new XMLHttpRequest();
@@ -80,6 +84,8 @@
     node.textContent = statuseMessage;
     document.body.insertAdjacentElement(`afterbegin`, node);
   };
+
+  // ЭКСПОРТ------------------------------------------------------------------------------------------------------------------
 
   window.backend = {
     load,
