@@ -187,5 +187,6 @@
     showUploadStatus: showFormUploadStatus,
     successMessage,
     errorMessage,
+    MAX_OFFER_PRICE,
   };
 })();
