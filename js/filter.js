@@ -21,33 +21,33 @@
   const contains = window.util.contains;
 
   // ------------------------------------------------------------------------------------------------------------------------
-  const housingTypeValue = housingType.value;
-  const housingPriceValue = housingPrice.value;
-  const housingRoomsValue = housingRooms.value;
-  const housingGuestsValue = housingGuests.value;
-  const selectedFeatures = Array.from(housingFeatures.querySelectorAll(`.map__checkbox:checked`)).map((checkbox) => checkbox.value);
 
-  const isTypeMatched = (offer) => {
-    return housingTypeValue === ANY_VALUE || offer.offer.type === housingTypeValue;
+  const isTypeMatched = (arg) => {
+    const housingTypeValue = housingType.value;
+    return housingTypeValue === ANY_VALUE || arg.offer.type === housingTypeValue;
   };
 
-  const isPriceMatched = (offer) => {
+  const isPriceMatched = (arg) => {
+    const housingPriceValue = housingPrice.value;
     return housingPriceValue === ANY_VALUE ||
-    (housingPriceValue === `low` && offer.offer.price < LOW_PRICE_BAR) ||
-    (housingPriceValue === `middle` && (offer.offer.price > LOW_PRICE_BAR && offer.offer.price < HIGH_PRICE_BAR)) ||
-      (housingPriceValue === `high` && offer.offer.price > HIGH_PRICE_BAR);
+    (housingPriceValue === `low` && arg.offer.price < LOW_PRICE_BAR) ||
+    (housingPriceValue === `middle` && (arg.offer.price > LOW_PRICE_BAR && arg.offer.price < HIGH_PRICE_BAR)) ||
+      (housingPriceValue === `high` && arg.offer.price > HIGH_PRICE_BAR);
   };
 
-  const isGuestsMatched = (offer) => {
-    return housingGuestsValue === ANY_VALUE || offer.offer.guests === Number(housingGuestsValue);
+  const isGuestsMatched = (arg) => {
+    const housingGuestsValue = housingGuests.value;
+    return housingGuestsValue === ANY_VALUE || arg.offer.guests === Number(housingGuestsValue);
   };
 
-  const isRoomsMatched = (offer) => {
-    return housingRoomsValue === ANY_VALUE || offer.offer.rooms === Number(housingRoomsValue);
+  const isRoomsMatched = (arg) => {
+    const housingRoomsValue = housingRooms.value;
+    return housingRoomsValue === ANY_VALUE || arg.offer.rooms === Number(housingRoomsValue);
   };
 
-  const isFeaturesMatched = (offer) => {
-    return contains(offer.offer.features, selectedFeatures) || selectedFeatures.length === 0;
+  const isFeaturesMatched = (arg) => {
+    const selectedFeatures = Array.from(housingFeatures.querySelectorAll(`.map__checkbox:checked`)).map((checkbox) => checkbox.value);
+    return contains(arg.offer.features, selectedFeatures) || selectedFeatures.length === 0;
   };
 
   const filterOffers = () => {
@@ -58,6 +58,7 @@
     for (let i = 0; i < offers.length; i++) {
 
       const typeMatched = isTypeMatched(offers[i]);
+      console.log(typeMatched);
       const priceMatched = isPriceMatched(offers[i]);
       const guestsMatched = isGuestsMatched(offers[i]);
       const roomsMatched = isRoomsMatched(offers[i]);
