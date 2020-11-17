@@ -28,31 +28,26 @@
   const selectedFeatures = Array.from(housingFeatures.querySelectorAll(`.map__checkbox:checked`)).map((checkbox) => checkbox.value);
 
   const isTypeMatched = (offer) => {
-    const typeMatched = housingTypeValue === ANY_VALUE || offer.offer.type === housingTypeValue;
-    return typeMatched;
+    return housingTypeValue === ANY_VALUE || offer.offer.type === housingTypeValue;
   };
 
   const isPriceMatched = (offer) => {
-    const priceMatched = housingPriceValue === ANY_VALUE ||
+    return housingPriceValue === ANY_VALUE ||
     (housingPriceValue === `low` && offer.offer.price < LOW_PRICE_BAR) ||
     (housingPriceValue === `middle` && (offer.offer.price > LOW_PRICE_BAR && offer.offer.price < HIGH_PRICE_BAR)) ||
       (housingPriceValue === `high` && offer.offer.price > HIGH_PRICE_BAR);
-    return priceMatched;
   };
 
   const isGuestsMatched = (offer) => {
-    const guestsMatched = housingGuestsValue === ANY_VALUE || offer.offer.guests === Number(housingGuestsValue);
-    return guestsMatched;
+    return housingGuestsValue === ANY_VALUE || offer.offer.guests === Number(housingGuestsValue);
   };
 
   const isRoomsMatched = (offer) => {
-    const roomsMatched = housingRoomsValue === ANY_VALUE || offer.offer.rooms === Number(housingRoomsValue);
-    return roomsMatched;
+    return housingRoomsValue === ANY_VALUE || offer.offer.rooms === Number(housingRoomsValue);
   };
 
   const isFeaturesMatched = (offer) => {
-    const featuresMatched = contains(offer.offer.features, selectedFeatures) || selectedFeatures.length === 0;
-    return featuresMatched;
+    return contains(offer.offer.features, selectedFeatures) || selectedFeatures.length === 0;
   };
 
   const filterOffers = () => {
