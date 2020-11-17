@@ -32,7 +32,7 @@
     return housingPriceValue === ANY_VALUE ||
     (housingPriceValue === `low` && arg.offer.price < LOW_PRICE_BAR) ||
     (housingPriceValue === `middle` && (arg.offer.price > LOW_PRICE_BAR && arg.offer.price < HIGH_PRICE_BAR)) ||
-      (housingPriceValue === `high` && arg.offer.price > HIGH_PRICE_BAR);
+    (housingPriceValue === `high` && arg.offer.price > HIGH_PRICE_BAR);
   };
 
   const isGuestsMatched = (arg) => {
@@ -50,15 +50,15 @@
     return contains(arg.offer.features, selectedFeatures) || selectedFeatures.length === 0;
   };
 
-  const filterOffers = () => {
+  // ------------------------------------------------------------------------------------------------------------------------
 
+  const filterOffers = () => {
     const result = [];
     const offers = window.data.offers;
 
     for (let i = 0; i < offers.length; i++) {
 
       const typeMatched = isTypeMatched(offers[i]);
-      console.log(typeMatched);
       const priceMatched = isPriceMatched(offers[i]);
       const guestsMatched = isGuestsMatched(offers[i]);
       const roomsMatched = isRoomsMatched(offers[i]);
