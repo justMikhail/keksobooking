@@ -22,32 +22,66 @@
 
   // ------------------------------------------------------------------------------------------------------------------------
 
+  const housingTypeValue = housingType.value;
+  const housingPriceValue = housingPrice.value;
+  const housingRoomsValue = housingRooms.value;
+  const housingGuestsValue = housingGuests.value;
+
+  const selectedFeatures = Array.from(housingFeatures.querySelectorAll(`.map__checkbox:checked`)).map((checkbox) => checkbox.value);
+
+  const typeMatched = (offer) => {
+    if (housingTypeValue === ANY_VALUE || offer.offer.type === housingTypeValue) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const priceMatched = (offer) => {
+    if (housingPriceValue === ANY_VALUE ||
+      (housingPriceValue === `low` && offer.offer.price < LOW_PRICE_BAR) ||
+      (housingPriceValue === `middle` && (offer.offer.price > LOW_PRICE_BAR && offer.offer.price < HIGH_PRICE_BAR)) ||
+      (housingPriceValue === `high` && offer.offer.price > HIGH_PRICE_BAR)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const guestsMatched = (offer) => {
+    if (housingGuestsValue === ANY_VALUE || offer.offer.guests === Number(housingGuestsValue)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const roomsMatched = (offer) => {
+    if (housingRoomsValue === ANY_VALUE || offer.offer.rooms === Number(housingRoomsValue)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const featuresMatched = (offer) => {
+    if (contains(offer.offer.features, selectedFeatures) || selectedFeatures.length === 0) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  // ------------------------------------------------------------------------------------------------------------------------
+
   const filterOffers = () => {
-    const housingTypeValue = housingType.value;
-    const housingPriceValue = housingPrice.value;
-    const housingRoomsValue = housingRooms.value;
-    const housingGuestsValue = housingGuests.value;
-
-
-    const selectedFeatures = Array.from(housingFeatures.querySelectorAll(`.map__checkbox:checked`)).map((checkbox) => checkbox.value);
 
     const result = [];
     const offers = window.data.offers;
 
     for (let i = 0; i < offers.length; i++) {
 
-      const typeMatched = housingTypeValue === ANY_VALUE || offers[i].offer.type === housingTypeValue;
-
-      const priceMatched = housingPriceValue === ANY_VALUE ||
-        (housingPriceValue === `low` && offers[i].offer.price < LOW_PRICE_BAR) ||
-        (housingPriceValue === `middle` && (offers[i].offer.price > LOW_PRICE_BAR && offers[i].offer.price < HIGH_PRICE_BAR)) ||
-        (housingPriceValue === `high` && offers[i].offer.price > HIGH_PRICE_BAR);
-
-      const guestsMatched = housingGuestsValue === ANY_VALUE || offers[i].offer.guests === Number(housingGuestsValue);
-      const roomsMatched = housingRoomsValue === ANY_VALUE || offers[i].offer.rooms === Number(housingRoomsValue);
-      const featuresMatched = contains(offers[i].offer.features, selectedFeatures) || selectedFeatures.length === 0;
-
-      if (typeMatched && priceMatched && guestsMatched && roomsMatched && featuresMatched) {
+      if (typeMatched(offers[i]) && priceMatched(offers[i]) && guestsMatched(offers[i]) && roomsMatched(offers[i]) && featuresMatched(offers[i])) {
         result.push(offers[i]);
       }
 
@@ -55,8 +89,8 @@
         break;
       }
     }
+    console.log(result);
     return result;
-
   };
 
   const onMapFilterChange = window.debounce(() => {
