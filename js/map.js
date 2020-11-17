@@ -128,6 +128,7 @@
     const openedOfferCard = document.querySelector(`.map__card`);
     if (openedOfferCard) {
       openedOfferCard.remove();
+      window.removeEventListener(`keydown`, onWindowKeydown);
     }
   };
 
