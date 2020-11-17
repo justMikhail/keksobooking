@@ -57,11 +57,11 @@
 
     for (let i = 0; i < offers.length; i++) {
 
-      const typeMatched = isTypeMatched([offers[i]]);
-      const priceMatched = isPriceMatched([offers[i]]);
-      const guestsMatched = isGuestsMatched([offers[i]]);
-      const roomsMatched = isRoomsMatched([offers[i]]);
-      const featuresMatched = isFeaturesMatched([offers[i]]);
+      const typeMatched = isTypeMatched(offers[i]);
+      const priceMatched = isPriceMatched(offers[i]);
+      const guestsMatched = isGuestsMatched(offers[i]);
+      const roomsMatched = isRoomsMatched(offers[i]);
+      const featuresMatched = isFeaturesMatched(offers[i]);
 
       if (typeMatched && priceMatched && guestsMatched && roomsMatched && featuresMatched) {
         result.push(offers[i]);
