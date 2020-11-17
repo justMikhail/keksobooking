@@ -6,9 +6,14 @@
   const MAX_TITLE_LENGTH = 100;
   const MAX_OFFER_PRICE = 1000000;
 
-  const isEscPressed = window.util.isEscPressed;
+  const minPrices = {
+    BUNGALO_PRICE: 0,
+    FLAT_PRICE: 1000,
+    HOUS_PRICE: 5000,
+    PALACE_PRICE: 10000,
+  };
 
-  // ------------------------------------------------------------------------------------------------------------------------
+  const isEscPressed = window.util.isEscPressed;
 
   const adForm = document.querySelector(`.ad-form`); // Форма.
   const offeravatar = adForm.querySelector(`#avatar`); // Форма. Аватар владельца
@@ -21,6 +26,9 @@
   const inputRoomsNumber = adForm.querySelector(`#room_number`); // Форма выбора колличества комнат
   const inputGuestsNumber = adForm.querySelector(`#capacity`); // Форма выбора колличества гостей
   const offerimages = adForm.querySelector(`#images`); // Форма. input type="file"
+  const resetBtn = adForm.querySelector(`.ad-form__reset`);
+
+  // ------------------------------------------------------------------------------------------------------------------------
 
   // БЛОКИРОВКА формы
 
@@ -55,9 +63,9 @@
     let valueTitleLength = offerTitle.value.length;
 
     if (valueTitleLength < MIN_TITLE_LENGTH) {
-      offerTitle.setCustomValidity(`Добавьте ` + (MIN_TITLE_LENGTH - valueTitleLength) + ` симв.`);
+      offerTitle.setCustomValidity(`Добавьте ${MIN_TITLE_LENGTH - valueTitleLength} симв.`);
     } else if (valueTitleLength > MAX_TITLE_LENGTH) {
-      offerTitle.setCustomValidity(`Лимит привышен на ` + (valueTitleLength - MAX_TITLE_LENGTH) + ` симв.`);
+      offerTitle.setCustomValidity(`Лимит привышен на ${valueTitleLength - MAX_TITLE_LENGTH} симв.`);
     } else {
       offerTitle.setCustomValidity(``);
     }
@@ -71,19 +79,19 @@
 
   // ВАЛИДАЦИЯ. Поле «Тип жилья» влияет на минимальное значение поля «Цена за ночь»
   const onOfferPriceOrTypeChange = () => {
-    if ((offerType.value === `bungalow`) && (offerPrice.value < 0)) {
+    if ((offerType.value === `bungalow`) && (offerPrice.value < minPrices.BUNGALO_PRICE)) {
       offerPrice.setCustomValidity(`Для бунгало минимальная цена за ночь 0р`);
       offerPrice.setAttribute(`min`, `0`);
       offerPrice.setAttribute(`placeholder`, `0`);
-    } else if ((offerType.value === `flat`) && (offerPrice.value < 1000)) {
+    } else if ((offerType.value === `flat`) && (offerPrice.value < minPrices.FLAT_PRICE)) {
       offerPrice.setCustomValidity(`Минимальная цена за ночь 1000р для данного типа жидья`);
       offerPrice.setAttribute(`min`, `1000`);
       offerPrice.setAttribute(`placeholder`, `1000`);
-    } else if ((offerType.value === `house`) && (offerPrice.value < 5000)) {
+    } else if ((offerType.value === `house`) && (offerPrice.value < minPrices.HOUS_PRICE)) {
       offerPrice.setCustomValidity(`Минимальная цена за ночь 5000р для данного типа жидья`);
       offerPrice.setAttribute(`min`, `5000`);
       offerPrice.setAttribute(`placeholder`, `5000`);
-    } else if ((offerType.value === `palace`) && (offerPrice.value < 10000)) {
+    } else if ((offerType.value === `palace`) && (offerPrice.value < minPrices.PALACE_PRICE)) {
       offerPrice.setCustomValidity(`Минимальная цена за ночь 10000р для данного типа жидья`);
       offerPrice.setAttribute(`min`, `10000`);
       offerPrice.setAttribute(`placeholder`, `10000`);
@@ -150,24 +158,29 @@
     const messageWindow = messageTemplate.cloneNode(true);
     const errorButton = messageWindow.querySelector(`.error__button`);
     const main = document.querySelector(`main`);
+    const closeWindow = () => {
+      messageWindow.remove();
+      window.removeEventListener(`keydown`, onWindowKeydown);
+      window.removeEventListener(`click`, onWindowClick);
+    };
 
     main.append(messageWindow);
 
-    if (errorButton) {
+    if (errorButton) { // ?
       errorButton.addEventListener(`click`, () => {
-        messageWindow.remove();
+        closeWindow();
       });
     }
 
     const onWindowClick = (evt) => {
       if (evt.target.parentNode !== messageWindow) {
-        messageWindow.remove();
+        closeWindow();
       }
     };
 
     const onWindowKeydown = (evt) => {
       if (isEscPressed(evt)) {
-        messageWindow.remove();
+        closeWindow();
       }
     };
 
@@ -186,6 +199,7 @@
     successMessage,
     errorMessage,
     MAX_OFFER_PRICE,
+    resetBtn,
   };
 
 })();

@@ -16,6 +16,7 @@
   const formErrorMessage = window.form.errorMessage;
   const deleteAllPins = window.map.deleteAllPins;
   const closeOpenedOfferCard = window.map.closeOpenedOfferCard;
+  const resetBtn = window.form.resetBtn;
 
   // ------------------------------------------------------------------------------------------------------------------------
 
@@ -30,9 +31,9 @@
   const onSuccess = (data) => {
     window.data.offers = data;
     // Присваиваем id
-    for (let i = 0; i < data.length; i++) {
-      data[i].id = `${i + 1}`;
-    }
+    data.forEach((offer, i) => {
+      offer.id = `${i + 1}`;
+    });
     activateMap();
   };
 
@@ -75,11 +76,17 @@
     upLoad(onFormSuccessUpload, onFormErrorUpload, new FormData(adForm));
   };
 
+  const onResetBtnClick = (evt) => {
+    evt.preventDefault();
+    returnToNoActivePage();
+  };
+
   // ------------------------------------------------------------------------------------------------------------------------
 
   mainPin.addEventListener(`click`, onMainPinClick);
   mainPin.addEventListener(`keydown`, onMainPinKeyDown);
   mainPin.addEventListener(`mousedown`, onActiveMainPinMouseDown);
   adForm.addEventListener(`submit`, onAdFormSubmit);
+  resetBtn.addEventListener(`click`, onResetBtnClick);
 
 })();

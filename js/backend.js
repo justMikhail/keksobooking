@@ -45,8 +45,8 @@
     xhr.addEventListener(`error`, () => {
       onError(`Произошла ошибка. Неполадки с интернет-соединением.`);
     });
-    xhr.addEventListener(`timeout`, function () {
-      onError(`Запрос не успел выполниться за ` + xhr.timeout + `мс`);
+    xhr.addEventListener(`timeout`, () => {
+      onError(`Запрос не успел выполниться за ${xhr.timeout} мс`);
     });
 
     xhr.timeout = TIMEOUT_IN_MS;

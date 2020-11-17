@@ -26,16 +26,14 @@
     newCard.querySelector(`.popup__text--time`).textContent = `Заезд после ${cardData.offer.checkin} выезд до ${cardData.offer.checkout}`;
 
     popupFeatures.innerHTML = ``;
-    for (let i = 0; i < cardData.offer.features.length; i++) {
-      const feature = cardData.offer.features[i];
+    cardData.offer.features.forEach((feature) => {
       const newLi = document.createElement(`li`);
       newLi.classList.add(`popup__feature`, `popup__feature--${feature}`);
       popupFeatures.appendChild(newLi);
-    }
+    });
 
     popupPhotos.innerHTML = ``;
-    for (let i = 0; i < cardData.offer.photos.length; i++) {
-      const photoFromArr = cardData.offer.photos[i];
+    cardData.offer.photos.forEach((photoFromArr) => {
       const newImg = document.createElement(`img`);
       newImg.classList.add(`popup__photo`);
       newImg.src = photoFromArr;
@@ -43,7 +41,7 @@
       newImg.setAttribute(`height`, CARD_PHOTO_HEIGHT);
       newImg.setAttribute(`alt`, `Фотография жилья`);
       popupPhotos.appendChild(newImg);
-    }
+    });
 
     newCard.querySelector(`.popup__avatar`).src = cardData.author.avatar;
 
@@ -52,8 +50,7 @@
     return cardFragment;
   };
 
-
-  // ЭКСПОРТ--------------------------------------------------------------------------------
+  // ЭКСПОРТ------------------------------------------------------------------------------------------------------------------
 
   window.card = {
     render: renderCard,
